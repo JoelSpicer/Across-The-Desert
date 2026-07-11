@@ -38,6 +38,7 @@ layout_mode = 2
 
 [node name="TopHUD" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1628873461]
 layout_mode = 2
+alignment = 1
 
 [node name="GritLabel" type="Label" parent="MarginContainer/VBoxContainer/TopHUD" unique_id=1120266740]
 layout_mode = 2
@@ -47,23 +48,31 @@ text = "gritlabel"
 layout_mode = 2
 text = "waterlabel"
 
-[node name="AmmoLabel" type="Label" parent="MarginContainer/VBoxContainer/TopHUD" unique_id=1436106187]
+[node name="GapLabel" type="Label" parent="MarginContainer/VBoxContainer/TopHUD" unique_id=1436106187]
 layout_mode = 2
-text = "ammolabel"
+text = "gaplabel"
 
 [node name="EventDisplayArea" type="ColorRect" parent="MarginContainer/VBoxContainer" unique_id=584878760]
 layout_mode = 2
+size_flags_vertical = 3
+color = Color(0, 0, 0, 1)
 
 [node name="MainText" type="RichTextLabel" parent="MarginContainer/VBoxContainer/EventDisplayArea" unique_id=662743340]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 bbcode_enabled = true
 text = "richtextlabel"
 fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="ActionButtons" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=40023567]
 layout_mode = 2
+alignment = 1
 
 [node name="Choice1Button" type="Button" parent="MarginContainer/VBoxContainer/ActionButtons" unique_id=1415337461]
 layout_mode = 2

@@ -12,7 +12,7 @@ func _ready():
 		push_error("Event pool is empty! Add NarrativeEvent resources in the inspector.")
 		return
 		
-	trigger_random_event()
+	#trigger_random_event()
 
 func trigger_random_event():
 	# Pick a random event from the pool

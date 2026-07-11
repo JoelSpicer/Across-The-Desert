@@ -15,6 +15,9 @@ func _ready():
 	
 	btn_choice_1.pressed.connect(_on_choice_1_pressed)
 	btn_choice_2.pressed.connect(_on_choice_2_pressed)
+	
+	if event_manager:
+		event_manager.trigger_random_event()
 
 func update_hud():
 	label_water.text = "Water: " + str(GameState.water)
