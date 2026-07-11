@@ -35,21 +35,9 @@ func load_event(event_resource: NarrativeEvent):
 	btn_choice_2.text = event_resource.choice_2_text
 
 func _on_choice_1_pressed():
-	# Apply all costs/rewards to the global state
-	GameState.modify_water(current_event.choice_1_water_cost)
-	GameState.modify_ammo(current_event.choice_1_ammo_cost)
-	GameState.modify_gun_condition(current_event.choice_1_gun_condition_cost)
-	GameState.modify_gap(current_event.choice_1_gap_penalty)
-	
-	# Immediately load the next random event
-	EventManager.trigger_random_event()
+	# Simply tell the Event Manager that choice 1 was picked
+	event_manager.process_choice(1)
 
 func _on_choice_2_pressed():
-	# Apply all costs/rewards to the global state
-	GameState.modify_water(current_event.choice_2_water_cost)
-	GameState.modify_ammo(current_event.choice_2_ammo_cost)
-	GameState.modify_gun_condition(current_event.choice_2_gun_condition_cost)
-	GameState.modify_gap(current_event.choice_2_gap_penalty)
-	
-	# Immediately load the next random event
-	EventManager.trigger_random_event()
+	# Simply tell the Event Manager that choice 2 was picked
+	event_manager.process_choice(2)
