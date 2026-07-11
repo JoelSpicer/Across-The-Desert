@@ -13,6 +13,7 @@ extends Control
 
 func _ready():
 	GameState.stats_changed.connect(update_hud)
+	GameState.player_died.connect(_on_player_died)
 	update_hud()
 	
 	btn_choice_1.pressed.connect(_on_choice_1_pressed)
@@ -22,11 +23,11 @@ func _ready():
 		event_manager.trigger_random_event()
 
 func update_hud():
-	label_water.text = "Water: " + str(GameState.water)
-	label_grit.text = "Grit: " + str(GameState.current_grit)
-	label_gap.text = "Gap: " + str(GameState.gap_distance)
-	label_gun.text = "Gun: " + str(GameState.gun_condition) + "%"
-	label_ammo.text = "Ammo: " + str(GameState.ammo)
+	label_water.text =  " | " + "Water: " + str(GameState.water) + " | "
+	label_grit.text = "Grit: " + str(GameState.current_grit) + " | "
+	label_gap.text = "Gap: " + str(GameState.gap_distance) + " | "
+	label_gun.text = "Gun: " + str(GameState.gun_condition) + "%" + " | "
+	label_ammo.text = "Ammo: " + str(GameState.ammo) + " | "
 	
 
 func load_event(event_resource: NarrativeEvent):
@@ -41,3 +42,8 @@ func _on_choice_1_pressed():
 func _on_choice_2_pressed():
 	# Simply tell the Event Manager that choice 2 was picked
 	event_manager.process_choice(2)
+
+func _on_player_died():
+	# Pause the game slightly before cutting to black for dramatic effect
+	await get_tree().create_timer(1.0).timeout 
+	get_tree().change_scene_to_file("res://Scene/GameOver.tscn")
