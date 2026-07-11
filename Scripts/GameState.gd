@@ -13,6 +13,7 @@ var food: int = 5
 var loop_count: int = 0
 var has_horn_of_eld: bool = false
 var current_afflictions: Array[String] = []
+var is_day: bool = true
 
 var death_reason: String = "" # Stores the specific failure message
 var is_dead: bool = false
@@ -22,7 +23,19 @@ signal player_died # New signal to tell the UI to change scenes
 
 func modify_water(amount: int):
 	water += amount
-	if water < 0: water = 0
+	
+	# If water drops below 0, the player is dehydrated
+	if water < 0:
+		# Calculate exactly how much water they were missing
+		var deficit = abs(water)
+		water = 0 # Clamp it safely back to 0
+		
+		# Define the punishment: How much Grit does 1 missing Water cost?
+		var dehydration_damage = deficit * 5 
+		
+		# Apply the damage using your existing grit function
+		modify_grit(-dehydration_damage)
+		
 	stats_changed.emit()
 	_check_death_states()
 
@@ -75,4 +88,9 @@ func reset_run():
 	food = 5
 	current_afflictions.clear()
 	
+	stats_changed.emit()
+
+func advance_time():
+	# Flip the boolean (if true, becomes false; if false, becomes true)
+	is_day = !is_day
 	stats_changed.emit()

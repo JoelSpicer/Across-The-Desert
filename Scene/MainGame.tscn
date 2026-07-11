@@ -44,6 +44,9 @@ layout_mode = 2
 layout_mode = 2
 alignment = 1
 
+[node name="TimeLabel" type="Label" parent="MarginContainer/VBoxContainer/TopHUD" unique_id=1618261645]
+layout_mode = 2
+
 [node name="WaterLabel" type="Label" parent="MarginContainer/VBoxContainer/TopHUD" unique_id=663611761]
 layout_mode = 2
 text = "waterlabel"
@@ -93,6 +96,10 @@ text = "choice 1"
 [node name="Choice2Button" type="Button" parent="MarginContainer/VBoxContainer/ActionButtons" unique_id=1780760058]
 layout_mode = 2
 text = "choice 2"
+
+[node name="MakeCampButton" type="Button" parent="MarginContainer/VBoxContainer/ActionButtons" unique_id=180408919]
+layout_mode = 2
+text = "Make Camp"
 
 [node name="EventManager" type="Node" parent="." unique_id=1248262272]
 script = ExtResource("2_cp47j")
