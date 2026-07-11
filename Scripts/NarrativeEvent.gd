@@ -10,11 +10,11 @@ class_name NarrativeEvent
 @export var choice_1_ammo_cost: int = 0
 @export var choice_1_gap_penalty: int = 0
 @export var choice_1_grit_cost: int = 0
-@export var choice_1_Condition_cost: int = 0
+@export var choice_1_gun_condition_cost: int = 0
 
 # What happens when they click choice 2?
 @export var choice_2_water_cost: int = 0
 @export var choice_2_ammo_cost: int = 0
 @export var choice_2_gap_penalty: int = 0
 @export var choice_2_grit_cost: int = 0
-@export var choice_2_Condition_cost: int = 0
+@export var choice_2_gun_condition_cost: int = 0

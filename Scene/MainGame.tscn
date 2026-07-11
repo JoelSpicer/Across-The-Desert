@@ -40,17 +40,25 @@ layout_mode = 2
 layout_mode = 2
 alignment = 1
 
-[node name="GritLabel" type="Label" parent="MarginContainer/VBoxContainer/TopHUD" unique_id=1120266740]
-layout_mode = 2
-text = "gritlabel"
-
 [node name="WaterLabel" type="Label" parent="MarginContainer/VBoxContainer/TopHUD" unique_id=663611761]
 layout_mode = 2
 text = "waterlabel"
 
+[node name="GritLabel" type="Label" parent="MarginContainer/VBoxContainer/TopHUD" unique_id=1120266740]
+layout_mode = 2
+text = "gritlabel"
+
 [node name="GapLabel" type="Label" parent="MarginContainer/VBoxContainer/TopHUD" unique_id=1436106187]
 layout_mode = 2
 text = "gaplabel"
+
+[node name="GunConditionLabel" type="Label" parent="MarginContainer/VBoxContainer/TopHUD" unique_id=49075460]
+layout_mode = 2
+text = "GunConditionLabel"
+
+[node name="AmmoLabel" type="Label" parent="MarginContainer/VBoxContainer/TopHUD" unique_id=2003342263]
+layout_mode = 2
+text = "AmmoLabel"
 
 [node name="EventDisplayArea" type="ColorRect" parent="MarginContainer/VBoxContainer" unique_id=584878760]
 layout_mode = 2
