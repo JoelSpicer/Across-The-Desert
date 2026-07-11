@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="NarrativeEvent" format=3 uid="uid://daiuf8mceswdq"]
+
+[ext_resource type="Script" uid="uid://tebrdjqw5ke" path="res://Scripts/NarrativeEvent.gd" id="1_qw1yj"]
+
+[resource]
+script = ExtResource("1_qw1yj")
+event_text = "You spot a shimmering pool of water between two dunes. It looks clean, but a strange, skeletal bird watches you from a nearby dead tree."
+choice_1_text = "Drink deep (Risk disease)"
+choice_2_text = "Ignore it and push forward."
+choice_1_water_cost = 10
+choice_1_gap_penalty = 5
+choice_1_grit_cost = -5
+choice_2_water_cost = -5
+choice_2_gap_penalty = -10
+metadata/_custom_type_script = "uid://tebrdjqw5ke"

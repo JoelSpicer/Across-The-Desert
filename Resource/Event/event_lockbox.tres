@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="NarrativeEvent" format=3 uid="uid://bk7ve7l4gpg2l"]
+
+[ext_resource type="Script" uid="uid://tebrdjqw5ke" path="res://Scripts/NarrativeEvent.gd" id="1_o2nqa"]
+
+[resource]
+script = ExtResource("1_o2nqa")
+event_text = "You see a rusty lockbox half buried in the sand. It looks very old and weathered, but supplies are hard to come across..."
+choice_1_text = "Try and Open"
+choice_2_text = "Ignore it and push forward."
+choice_1_ammo_cost = 5
+choice_1_gap_penalty = 5
+choice_2_gap_penalty = -10
+metadata/_custom_type_script = "uid://tebrdjqw5ke"

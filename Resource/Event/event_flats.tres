@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="NarrativeEvent" format=3 uid="uid://c0xt24qalu5pd"]
+
+[ext_resource type="Script" uid="uid://tebrdjqw5ke" path="res://Scripts/NarrativeEvent.gd" id="1_ctjd5"]
+
+[resource]
+script = ExtResource("1_ctjd5")
+event_text = "The ground here is flatter and harder than normal, you could try and pick up the pace to make up for lost time."
+choice_1_text = "Move faster"
+choice_2_text = "Keep pace"
+choice_1_water_cost = -10
+choice_1_gap_penalty = -10
+metadata/_custom_type_script = "uid://tebrdjqw5ke"
