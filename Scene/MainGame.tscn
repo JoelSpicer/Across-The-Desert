@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://bfe5vvl66egc6"]
+
+[ext_resource type="Script" uid="uid://bl2mj2viyx60t" path="res://Scripts/Maingame.gd" id="1_qop27"]
+
+[node name="MainGame" type="Control" unique_id=681661840]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qop27")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=130289015]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1217635462]
+layout_mode = 2
+
+[node name="TopHUD" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1628873461]
+layout_mode = 2
+
+[node name="GritLabel" type="Label" parent="MarginContainer/VBoxContainer/TopHUD" unique_id=1120266740]
+layout_mode = 2
+
+[node name="WaterLabel" type="Label" parent="MarginContainer/VBoxContainer/TopHUD" unique_id=663611761]
+layout_mode = 2
+
+[node name="AmmoLabel" type="Label" parent="MarginContainer/VBoxContainer/TopHUD" unique_id=1436106187]
+layout_mode = 2
+
+[node name="EventDisplayArea" type="ColorRect" parent="MarginContainer/VBoxContainer" unique_id=584878760]
+layout_mode = 2
+
+[node name="MainText" type="RichTextLabel" parent="MarginContainer/VBoxContainer/EventDisplayArea" unique_id=662743340]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ActionButtons" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=40023567]
+layout_mode = 2
+
+[node name="Choice1Button" type="Button" parent="MarginContainer/VBoxContainer/ActionButtons" unique_id=1415337461]
+layout_mode = 2
+
+[node name="Choice2Button" type="Button" parent="MarginContainer/VBoxContainer/ActionButtons" unique_id=1780760058]
+layout_mode = 2

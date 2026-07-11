@@ -10,9 +10,13 @@ config_version=5
 
 [application]
 
-config/name="New Game Project"
+config/name="Across The Desert"
 config/features=PackedStringArray("4.6", "Mobile")
 config/icon="res://icon.svg"
+
+[autoload]
+
+GameState="*uid://dnbsv168njwan"
 
 [physics]
 
