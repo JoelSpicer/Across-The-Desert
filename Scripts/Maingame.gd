@@ -13,6 +13,8 @@ extends Control
 
 @onready var event_manager = $EventManager # Reference the new node
 
+const CAMP_PHASE_SCENE = preload("res://Scene/CampPhase.tscn")
+
 func _ready():
 	GameState.stats_changed.connect(update_hud)
 	GameState.player_died.connect(_on_player_died)
@@ -61,6 +63,8 @@ func _on_player_died():
 	get_tree().change_scene_to_file("res://Scene/GameOver.tscn")
 	
 func _on_make_camp_pressed():
-	# For now, just print to the console so we know it works. 
-	# Later, this will load the CampPhase.tscn overlay!
-	print("Opening Camp Phase...")
+	# Instantiate the camp phase overlay
+	var camp_instance = CAMP_PHASE_SCENE.instantiate()
+	
+	# Add it as a child of MainGame so it renders on top of everything else
+	add_child(camp_instance)
