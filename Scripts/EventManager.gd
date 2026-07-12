@@ -27,6 +27,8 @@ func process_choice(choice_num: int):
 	var grit_cost = 0
 	var ammo_cost = 0
 	var gun_cost = 0
+	var food_cost = 0
+	var item_reward = ""
 	
 	# 1. Grab the base costs from the resource
 	if choice_num == 1:
@@ -35,12 +37,16 @@ func process_choice(choice_num: int):
 		grit_cost = current_event.choice_1_grit_cost 
 		ammo_cost = current_event.choice_1_ammo_cost
 		gun_cost = current_event.choice_1_gun_condition_cost
+		food_cost = current_event.choice_1_food_cost
+		item_reward = current_event.choice_1_item_reward
 	elif choice_num == 2:
 		water_cost = current_event.choice_2_water_cost
 		gap_penalty = current_event.choice_2_gap_penalty
 		grit_cost = current_event.choice_2_grit_cost
 		ammo_cost = current_event.choice_2_ammo_cost
 		gun_cost = current_event.choice_2_gun_condition_cost
+		food_cost = current_event.choice_2_food_cost
+		item_reward = current_event.choice_2_item_reward
 
 	# 2. Apply Day/Night Modifiers
 	if GameState.is_day:
@@ -66,6 +72,8 @@ func process_choice(choice_num: int):
 	GameState.modify_ammo(ammo_cost)
 	GameState.modify_gun_condition(gun_cost)
 	GameState.modify_gap(gap_penalty)
+	GameState.modify_food(food_cost)
+	GameState.add_item(item_reward)
 
 	# 4. Check for death before continuing
 	if GameState.is_dead:

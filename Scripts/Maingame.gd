@@ -41,7 +41,15 @@ func update_hud():
 	label_grit.text = "Grit: " + str(GameState.current_grit) + " | "
 	label_gap.text = "Gap: " + str(GameState.gap_distance) + " | "
 	label_gun.text = "Gun: " + str(GameState.gun_condition) + "%" + " | "
-	label_ammo.text = "Ammo: " + str(GameState.ammo) + " | "
+	label_ammo.text = "Ammo: " + str(GameState.ammo) + " |  " + str(GameState.food)
+	
+	# Check food and update the Camp button
+	if GameState.food > 0:
+		btn_make_camp.disabled = false
+		btn_make_camp.text = "Make Camp (-1 Food)"
+	else:
+		btn_make_camp.disabled = true
+		btn_make_camp.text = "No Food to Camp"
 	
 
 func load_event(event_resource: NarrativeEvent):
@@ -63,8 +71,11 @@ func _on_player_died():
 	get_tree().change_scene_to_file("res://Scene/GameOver.tscn")
 	
 func _on_make_camp_pressed():
-	# Instantiate the camp phase overlay
-	var camp_instance = CAMP_PHASE_SCENE.instantiate()
-	
-	# Add it as a child of MainGame so it renders on top of everything else
-	add_child(camp_instance)
+	# Double-check they have food, just to be safe
+	if GameState.food > 0:
+		# Deduct 1 food as the cost of setting up camp
+		GameState.modify_food(-1) 
+		
+		# Instantiate the camp phase overlay
+		var camp_instance = CAMP_PHASE_SCENE.instantiate()
+		add_child(camp_instance)

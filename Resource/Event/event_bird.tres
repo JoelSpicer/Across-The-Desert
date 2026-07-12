@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="NarrativeEvent" format=3 uid="uid://cd2el4u81xrgf"]
+
+[ext_resource type="Script" uid="uid://tebrdjqw5ke" path="res://Scripts/NarrativeEvent.gd" id="1_sqt17"]
+
+[resource]
+script = ExtResource("1_sqt17")
+event_text = "You see a bird perched on a petrified log. Is a bullet worth a small meal?"
+choice_1_text = "Kill and eat it"
+choice_2_text = "Leave it"
+choice_1_ammo_cost = 2
+choice_1_gap_penalty = 5
+choice_1_grit_cost = 10
+choice_1_gun_condition_cost = -10
+metadata/_custom_type_script = "uid://tebrdjqw5ke"

@@ -7,7 +7,7 @@ var current_grit: int = 100
 var water: int = 20
 var ammo: int = 12
 var gun_condition: int = 100
-var food: int = 5
+var food: int = 0
 
 # State Flags
 var loop_count: int = 0
@@ -17,6 +17,8 @@ var is_day: bool = true
 
 var death_reason: String = "" # Stores the specific failure message
 var is_dead: bool = false
+
+var inventory: Array[String] = []
 
 signal stats_changed 
 signal player_died # New signal to tell the UI to change scenes
@@ -94,3 +96,25 @@ func advance_time():
 	# Flip the boolean (if true, becomes false; if false, becomes true)
 	is_day = !is_day
 	stats_changed.emit()
+
+func modify_food(amount: int):
+	food += amount
+	if food < 0: food = 0
+	stats_changed.emit()
+	
+# --- NEW INVENTORY FUNCTIONS ---
+
+func add_item(item_name: String):
+	if item_name != "":
+		inventory.append(item_name)
+		stats_changed.emit()
+
+func remove_item(item_name: String) -> bool:
+	if inventory.has(item_name):
+		inventory.erase(item_name)
+		stats_changed.emit()
+		return true
+	return false
+
+func has_item(item_name: String) -> bool:
+	return inventory.has(item_name)
