@@ -9,5 +9,4 @@ choice_1_text = "Move faster"
 choice_2_text = "Keep pace"
 choice_1_water_cost = -10
 choice_1_gap_penalty = -10
-choice_1_grit_cost = -5
 metadata/_custom_type_script = "uid://tebrdjqw5ke"

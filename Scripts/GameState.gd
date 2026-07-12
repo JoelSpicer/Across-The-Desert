@@ -68,12 +68,17 @@ func _check_death_states():
 		return
 		
 	if current_grit <= 0:
-		is_dead = true # Add this line!
+		is_dead = true 
 		death_reason = "The desert claims you. Your grit has failed."
 		player_died.emit()
 	elif gap_distance >= 200:
-		is_dead = true # Add this line!
+		is_dead = true 
 		death_reason = "The trail goes cold. He has escaped."
+		player_died.emit()
+	elif gap_distance <= 0:
+		is_dead = true
+		death_reason = "You closed the distance. The Man in Black has nowhere left to run."
+		# We reuse the death signal here just to force the GameOver scene to load!
 		player_died.emit()
 
 func reset_run():
@@ -87,7 +92,7 @@ func reset_run():
 	water = 20
 	ammo = 12
 	gun_condition = 100
-	food = 5
+	food = 0
 	current_afflictions.clear()
 	
 	stats_changed.emit()

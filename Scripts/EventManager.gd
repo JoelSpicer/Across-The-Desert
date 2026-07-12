@@ -82,15 +82,3 @@ func process_choice(choice_num: int):
 	# 5. Advance the clock and load the next event
 	GameState.advance_time()
 	trigger_random_event()
-
-	# 3. Apply the final modified values to GameState
-	GameState.modify_water(water_cost)
-	GameState.modify_gap(gap_penalty)
-
-	# 4. Check for death before continuing
-	if GameState.is_dead:
-		return 
-
-	# 5. Advance the clock and load the next event
-	GameState.advance_time()
-	trigger_random_event()

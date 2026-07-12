@@ -26,6 +26,7 @@ theme_override_constants/margin_bottom = 20
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=495850979]
 self_modulate = Color(0, 0, 0, 1)
 layout_mode = 2
+size_flags_horizontal = 3
 theme_override_constants/separation = 30
 
 [node name="TitleLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=977828883]

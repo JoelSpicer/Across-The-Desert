@@ -1,15 +1,16 @@
 extends Control
 
-@onready var main_text = $MarginContainer/VBoxContainer/EventDisplayArea/MainText
-@onready var btn_choice_1 = $MarginContainer/VBoxContainer/ActionButtons/Choice1Button
-@onready var btn_choice_2 = $MarginContainer/VBoxContainer/ActionButtons/Choice2Button
-@onready var label_water = $MarginContainer/VBoxContainer/TopHUD/WaterLabel
-@onready var label_grit = $MarginContainer/VBoxContainer/TopHUD/GritLabel
-@onready var label_gap = $MarginContainer/VBoxContainer/TopHUD/GapLabel
-@onready var label_gun = $MarginContainer/VBoxContainer/TopHUD/GunConditionLabel
-@onready var label_ammo = $MarginContainer/VBoxContainer/TopHUD/AmmoLabel
-@onready var btn_make_camp = $MarginContainer/VBoxContainer/ActionButtons/MakeCampButton
-@onready var label_time = $MarginContainer/VBoxContainer/TopHUD/TimeLabel
+@onready var main_text = $MarginContainer/HBoxContainer/VBoxContainer/EventDisplayArea/MainText
+@onready var btn_choice_1 = $MarginContainer/HBoxContainer/VBoxContainer/ActionButtons/Choice1Button
+@onready var btn_choice_2 = $MarginContainer/HBoxContainer/VBoxContainer/ActionButtons/Choice2Button
+@onready var label_water = $MarginContainer/HBoxContainer/VBoxContainer/TopHUD/WaterLabel
+@onready var label_grit = $MarginContainer/HBoxContainer/VBoxContainer/TopHUD/GritLabel
+@onready var label_gap = $MarginContainer/HBoxContainer/VBoxContainer/TopHUD/GapLabel
+@onready var label_gun = $MarginContainer/HBoxContainer/VBoxContainer/TopHUD/GunConditionLabel
+@onready var label_ammo = $MarginContainer/HBoxContainer/VBoxContainer/TopHUD/AmmoLabel
+@onready var btn_make_camp = $MarginContainer/HBoxContainer/VBoxContainer/ActionButtons/MakeCampButton
+@onready var label_time = $MarginContainer/HBoxContainer/VBoxContainer/TopHUD/TimeLabel
+@onready var label_inventory_list = %InventoryList
 
 @onready var event_manager = $EventManager # Reference the new node
 
@@ -41,12 +42,18 @@ func update_hud():
 	label_grit.text = "Grit: " + str(GameState.current_grit) + " | "
 	label_gap.text = "Gap: " + str(GameState.gap_distance) + " | "
 	label_gun.text = "Gun: " + str(GameState.gun_condition) + "%" + " | "
-	label_ammo.text = "Ammo: " + str(GameState.ammo) + " |  " + str(GameState.food)
+	label_ammo.text = "Ammo: " + str(GameState.ammo) + " | "
+	
+	if GameState.inventory.is_empty():
+		label_inventory_list.text = "[Empty]"
+	else:
+		# The "\n" automatically puts a line break between each item in the array
+		label_inventory_list.text = "\n".join(GameState.inventory)
 	
 	# Check food and update the Camp button
 	if GameState.food > 0:
 		btn_make_camp.disabled = false
-		btn_make_camp.text = "Make Camp (-1 Food)"
+		btn_make_camp.text = "Make Camp (-1 Food | Stock: " + str(GameState.food) + ")"
 	else:
 		btn_make_camp.disabled = true
 		btn_make_camp.text = "No Food to Camp"
