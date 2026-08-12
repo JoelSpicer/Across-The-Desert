@@ -17,11 +17,36 @@ extends Control
 
 @onready var event_manager = $EventManager # Reference the new node
 
+# --- NEW: STAT TRACKING VARIABLES ---
+var prev_water: int = 0
+var prev_grit: int = 0
+var prev_gap: int = 0
+var prev_gun: int = 0
+var prev_ammo: int = 0
+var prev_food: int = 0
+
+# --- NEW: ARRAY TRACKING VARIABLES ---
+var prev_inventory: Array[String] = []
+var prev_afflictions: Array[String] = []
+
 const CAMP_PHASE_SCENE = preload("res://Scene/CampPhase.tscn")
 
 func _ready():
 	GameState.stats_changed.connect(update_hud)
 	GameState.player_died.connect(_on_player_died)
+	
+	# Set the baseline before updating the HUD
+	prev_water = GameState.water
+	prev_grit = GameState.current_grit
+	prev_gap = GameState.gap_distance
+	prev_gun = GameState.gun_condition
+	prev_ammo = GameState.ammo
+	prev_food = GameState.food
+	
+	# Set the baseline for arrays using .duplicate()!
+	prev_inventory = GameState.inventory.duplicate()
+	prev_afflictions = GameState.current_afflictions.duplicate()
+	
 	update_hud()
 	
 	btn_choice_1.pressed.connect(_on_choice_1_pressed)
@@ -74,7 +99,56 @@ func update_hud():
 		label_afflictions.text = "Status: Healthy"
 	else:
 		label_afflictions.text = "AFFLICTIONS:\n" + "\n".join(GameState.current_afflictions).capitalize()
+		
+		# --- NEW: ANIMATE STAT CHANGES ---
 	
+	# 1. Water
+	if GameState.water != prev_water:
+		animate_label(label_water, GameState.water > prev_water)
+		prev_water = GameState.water
+		
+	# 2. Grit
+	if GameState.current_grit != prev_grit:
+		animate_label(label_grit, GameState.current_grit > prev_grit)
+		prev_grit = GameState.current_grit
+		
+	# 3. Gap (Note: Gap is GOOD when the number goes DOWN, so the logic is inverted!)
+	if GameState.gap_distance != prev_gap:
+		animate_label(label_gap, GameState.gap_distance < prev_gap) 
+		prev_gap = GameState.gap_distance
+		
+	# 4. Gun Condition
+	if GameState.gun_condition != prev_gun:
+		animate_label(label_gun, GameState.gun_condition > prev_gun)
+		prev_gun = GameState.gun_condition
+		
+	# 5. Ammo
+	if GameState.ammo != prev_ammo:
+		animate_label(label_ammo, GameState.ammo > prev_ammo)
+		prev_ammo = GameState.ammo
+		
+	# 6. Food (We animate the Make Camp button since that's where food is displayed!)
+	if GameState.food != prev_food:
+		animate_label(btn_make_camp, GameState.food > prev_food)
+		prev_food = GameState.food
+	
+	# 7. Inventory
+	# Check if the array has changed at all
+	if GameState.inventory != prev_inventory:
+		# If the new array is bigger, we gained an item (Good)
+		var gained_item = GameState.inventory.size() > prev_inventory.size()
+		animate_label(label_inventory_list, gained_item)
+		# Take a new snapshot
+		prev_inventory = GameState.inventory.duplicate()
+		
+	# 8. Afflictions
+	if GameState.current_afflictions != prev_afflictions:
+		# If the new array is bigger, we gained an affliction
+		var gained_affliction = GameState.current_afflictions.size() > prev_afflictions.size()
+		# We use "not gained_affliction" here because gaining a status is BAD! 
+		# This makes it flash Red when you get hurt, and Green when you cure it.
+		animate_label(label_afflictions, not gained_affliction)
+		prev_afflictions = GameState.current_afflictions.duplicate()
 
 func load_event(event_resource: NarrativeEvent):
 	main_text.text = event_resource.event_text
@@ -103,3 +177,16 @@ func _on_make_camp_pressed():
 		# Instantiate the camp phase overlay
 		var camp_instance = CAMP_PHASE_SCENE.instantiate()
 		add_child(camp_instance)
+
+func animate_label(ui_element: Control, is_good: bool):
+	# Create a Godot 4 tween
+	var tween = create_tween()
+	
+	# Determine the flash color (Green for good, Red for bad)
+	var flash_color = Color.GREEN if is_good else Color.RED
+	
+	# Phase 1: Instantly snap the color to red or green
+	tween.tween_property(ui_element, "modulate", flash_color, 0.1)
+	
+	# Phase 2: Smoothly fade back to default white over half a second
+	tween.tween_property(ui_element, "modulate", Color.WHITE, 1.0)
