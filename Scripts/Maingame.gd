@@ -12,6 +12,9 @@ extends Control
 @onready var label_time = $MarginContainer/HBoxContainer/VBoxContainer/TopHUD/TimeLabel
 @onready var label_inventory_list = %InventoryList
 
+@onready var label_debug_keywords = %DebugKeywordsLabel
+@onready var label_afflictions = %AfflictionsLabel
+
 @onready var event_manager = $EventManager # Reference the new node
 
 const CAMP_PHASE_SCENE = preload("res://Scene/CampPhase.tscn")
@@ -57,6 +60,20 @@ func update_hud():
 	else:
 		btn_make_camp.disabled = true
 		btn_make_camp.text = "No Food to Camp"
+		
+	var current_tags = GameState.get_current_keywords()
+	
+	if current_tags.is_empty():
+		label_debug_keywords.text = "DEBUG TAGS:\n[None]"
+	else:
+		# Join the tags with a comma and a space so it reads cleanly
+		label_debug_keywords.text = "DEBUG TAGS:\n" + ", ".join(current_tags)
+		
+	# Update the Afflictions UI
+	if GameState.current_afflictions.is_empty():
+		label_afflictions.text = "Status: Healthy"
+	else:
+		label_afflictions.text = "AFFLICTIONS:\n" + "\n".join(GameState.current_afflictions).capitalize()
 	
 
 func load_event(event_resource: NarrativeEvent):

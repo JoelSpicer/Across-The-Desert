@@ -130,6 +130,17 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 
+[node name="AfflictionsLabel" type="Label" parent="MarginContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=2112916698]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1805170917]
+layout_mode = 2
+
+[node name="DebugKeywordsLabel" type="Label" parent="MarginContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=390685007]
+unique_name_in_owner = true
+layout_mode = 2
+
 [node name="EventManager" type="Node" parent="." unique_id=1248262272]
 script = ExtResource("2_cp47j")
 event_pool = Array[ExtResource("3_noc35")]([ExtResource("4_tsug7"), ExtResource("5_kwaul"), ExtResource("6_cr6pf"), ExtResource("7_tsug7")])

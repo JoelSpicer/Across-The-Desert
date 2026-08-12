@@ -122,6 +122,9 @@ func process_choice(choice_num: int):
 	GameState.add_affliction(given_affliction)
 	GameState.remove_affliction(cured_affliction)
 	
+	# Apply ongoing status effects (like Bleeding damage)
+	GameState.process_afflictions()
+	
 	# 4. Check for death before continuing
 	if GameState.is_dead:
 		return 

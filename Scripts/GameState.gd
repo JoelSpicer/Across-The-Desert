@@ -128,14 +128,28 @@ func has_item(item_name: String) -> bool:
 # --- AFFLICTION LOGIC ---
 
 func add_affliction(affliction: String):
-	if affliction != "" and not current_afflictions.has(affliction):
-		current_afflictions.append(affliction)
+	# Using to_lower() sanitizes the input so "Bleeding" and "bleeding" are treated the same
+	var clean_name = affliction.strip_edges().to_lower()
+	if clean_name != "" and not current_afflictions.has(clean_name):
+		current_afflictions.append(clean_name)
 		stats_changed.emit()
 
 func remove_affliction(affliction: String):
-	if affliction != "" and current_afflictions.has(affliction):
-		current_afflictions.erase(affliction)
+	var clean_name = affliction.strip_edges().to_lower()
+	if clean_name != "" and current_afflictions.has(clean_name):
+		current_afflictions.erase(clean_name)
 		stats_changed.emit()
+
+# --- NEW: THE STATUS SWITCHBOARD ---
+
+func process_afflictions():
+	for affliction in current_afflictions:
+		match affliction:
+			"bleeding":
+				modify_grit(-10)
+			# To add future statuses, just add a new match case!
+			# "exhausted":
+			#     modify_gap(5)
 
 # --- TAG GENERATOR ---
 
