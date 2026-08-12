@@ -13,12 +13,49 @@ func _ready():
 		return
 
 func trigger_random_event():
-	# Pick a random event from the pool
-	var random_index = randi() % event_pool.size()
-	current_event = event_pool[random_index]
+	var valid_events: Array[NarrativeEvent] = []
+	var total_weight: int = 0
+	var current_tags = GameState.get_current_keywords()
 	
-	# Send it to the UI
-	main_game_ui.load_event(current_event)
+	# 1. Filter the event pool based on conditions
+	for event in event_pool: # Assuming your loaded array is called 'events'
+		var is_valid = true
+		
+		# Check required keywords
+		for req in event.required_keywords:
+			if not current_tags.has(req.to_lower()):
+				is_valid = false
+				break
+				
+		# Check forbidden keywords
+		if is_valid:
+			for forb in event.forbidden_keywords:
+				if current_tags.has(forb.to_lower()):
+					is_valid = false
+					break
+		
+		# If it passes, add to the valid pool and calculate total weight
+		if is_valid:
+			valid_events.append(event)
+			total_weight += event.event_weight
+			
+	# 2. Fallback to prevent crashes if the table is empty
+	if valid_events.is_empty():
+		print("ERROR: No valid events found for current tags!")
+		return
+		
+	# 3. Roll the weighted dice
+	var roll = randi() % total_weight
+	var current_weight = 0
+	
+	for event in valid_events:
+		current_weight += event.event_weight
+		if roll < current_weight:
+			current_event = event
+			break
+			
+	# 4. Send the chosen event to the UI
+	get_parent().load_event(current_event)
 
 func process_choice(choice_num: int):
 	# Initialize variables to hold the stats before we modify them
@@ -30,6 +67,10 @@ func process_choice(choice_num: int):
 	var food_cost = 0
 	var item_reward = ""
 	
+	# New Affliction Variables
+	var given_affliction = ""
+	var cured_affliction = ""
+	
 	# 1. Grab the base costs from the resource
 	if choice_num == 1:
 		water_cost = current_event.choice_1_water_cost
@@ -39,6 +80,8 @@ func process_choice(choice_num: int):
 		gun_cost = current_event.choice_1_gun_condition_cost
 		food_cost = current_event.choice_1_food_cost
 		item_reward = current_event.choice_1_item_reward
+		given_affliction = current_event.choice_1_gives_affliction
+		cured_affliction = current_event.choice_1_cures_affliction
 	elif choice_num == 2:
 		water_cost = current_event.choice_2_water_cost
 		gap_penalty = current_event.choice_2_gap_penalty
@@ -47,6 +90,8 @@ func process_choice(choice_num: int):
 		gun_cost = current_event.choice_2_gun_condition_cost
 		food_cost = current_event.choice_2_food_cost
 		item_reward = current_event.choice_2_item_reward
+		given_affliction = current_event.choice_2_gives_affliction
+		cured_affliction = current_event.choice_2_cures_affliction
 
 	# 2. Apply Day/Night Modifiers
 	if GameState.is_day:
@@ -74,7 +119,9 @@ func process_choice(choice_num: int):
 	GameState.modify_gap(gap_penalty)
 	GameState.modify_food(food_cost)
 	GameState.add_item(item_reward)
-
+	GameState.add_affliction(given_affliction)
+	GameState.remove_affliction(cured_affliction)
+	
 	# 4. Check for death before continuing
 	if GameState.is_dead:
 		return 

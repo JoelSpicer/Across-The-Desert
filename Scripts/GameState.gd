@@ -20,6 +20,7 @@ var is_dead: bool = false
 
 var inventory: Array[String] = []
 
+
 signal stats_changed 
 signal player_died # New signal to tell the UI to change scenes
 
@@ -123,3 +124,36 @@ func remove_item(item_name: String) -> bool:
 
 func has_item(item_name: String) -> bool:
 	return inventory.has(item_name)
+
+# --- AFFLICTION LOGIC ---
+
+func add_affliction(affliction: String):
+	if affliction != "" and not current_afflictions.has(affliction):
+		current_afflictions.append(affliction)
+		stats_changed.emit()
+
+func remove_affliction(affliction: String):
+	if affliction != "" and current_afflictions.has(affliction):
+		current_afflictions.erase(affliction)
+		stats_changed.emit()
+
+# --- TAG GENERATOR ---
+
+func get_current_keywords() -> Array[String]:
+	var keywords: Array[String] = []
+	
+	# 1. Add environmental tags
+	if is_day:
+		keywords.append("day")
+	else:
+		keywords.append("night")
+		
+	# 2. Add current afflictions as tags (lowercase for safe string matching)
+	for affliction in current_afflictions:
+		keywords.append(affliction.to_lower())
+		
+	# 3. Add inventory items as tags
+	for item in inventory:
+		keywords.append(item.to_lower())
+		
+	return keywords
