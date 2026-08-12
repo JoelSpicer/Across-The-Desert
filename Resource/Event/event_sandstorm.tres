@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="NarrativeEvent" format=3 uid="uid://d3e4f5g6h7i8"]
+
+[ext_resource type="Script" uid="uid://tebrdjqw5ke" path="res://Scripts/NarrativeEvent.gd" id="1_storm"]
+
+[resource]
+script = ExtResource("1_storm")
+event_text = "A towering wall of screaming, abrasive sand consumes the horizon, moving fast. You have seconds to react."
+choice_1_text = "Push through the storm."
+choice_2_text = "Hunker down in a ravine."
+choice_1_gun_condition_cost = -25
+choice_1_grit_cost = -15
+choice_1_gap_penalty = -10
+choice_1_gives_affliction = "Bleeding"
+choice_2_water_cost = -5
+choice_2_gap_penalty = 25
+metadata/_custom_type_script = "uid://tebrdjqw5ke"

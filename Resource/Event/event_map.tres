@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="NarrativeEvent" format=3 uid="uid://g6h7i8kak0l1"]
+
+[ext_resource type="Script" uid="uid://tebrdjqw5ke" path="res://Scripts/NarrativeEvent.gd" id="1_map"]
+
+[resource]
+script = ExtResource("1_map")
+event_weight = 8
+event_text = "A skeletal hand reaches out from a shallow sand grave, clutching a rolled piece of hardened leather. It looks like a map of the surrounding dunes."
+choice_1_text = "Pry the map from its grip."
+choice_2_text = "Search the rest of the grave for supplies."
+choice_1_grit_cost = -10
+choice_1_item_reward = "Map"
+choice_2_water_cost = 5
+choice_2_ammo_cost = 4
+choice_2_gap_penalty = 10
+metadata/_custom_type_script = "uid://tebrdjqw5ke"

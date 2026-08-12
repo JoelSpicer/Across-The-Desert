@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="NarrativeEvent" format=3 uid="uid://c2d3e4f5g6h7"]
+
+[ext_resource type="Script" uid="uid://tebrdjqw5ke" path="res://Scripts/NarrativeEvent.gd" id="1_bunker"]
+
+[resource]
+script = ExtResource("1_bunker")
+event_weight = 8
+required_keywords = Array[String](["old key"])
+forbidden_keywords = Array[String](["night"])
+event_text = "The blistering sun beats down on a half-buried steel bunker door. The heavy mechanical lock matches the exact shape of the Old Key in your pocket."
+choice_1_text = "Unlock it and raid the supplies."
+choice_2_text = "Leave it. He is getting away."
+choice_1_water_cost = 5
+choice_1_ammo_cost = 12
+choice_1_food_cost = 3
+choice_1_gap_penalty = 15
+choice_1_required_item = "Old Key"
+choice_2_gap_penalty = -5
+metadata/_custom_type_script = "uid://tebrdjqw5ke"

@@ -7,6 +7,12 @@
 [ext_resource type="Resource" uid="uid://bk7ve7l4gpg2l" path="res://Resource/Event/event_lockbox.tres" id="5_kwaul"]
 [ext_resource type="Resource" uid="uid://daiuf8mceswdq" path="res://Resource/Event/event_oasis.tres" id="6_cr6pf"]
 [ext_resource type="Resource" uid="uid://cd2el4u81xrgf" path="res://Resource/Event/event_bird.tres" id="7_tsug7"]
+[ext_resource type="Resource" uid="uid://c2d3e4f5g6h7" path="res://Resource/Event/event_bunker.tres" id="8_h2stg"]
+[ext_resource type="Resource" uid="uid://b1c2d3e4f5g6" path="res://Resource/Event/event_dogs.tres" id="9_67h40"]
+[ext_resource type="Resource" uid="uid://d3e4f5g6h7i8" path="res://Resource/Event/event_sandstorm.tres" id="10_6kscw"]
+[ext_resource type="Resource" uid="uid://f5g6h7i8kak0" path="res://Resource/Event/event_vulture.tres" id="11_gmmav"]
+[ext_resource type="Resource" uid="uid://e4f5g6h7i8ka" path="res://Resource/Event/event_wire.tres" id="12_kuqqk"]
+[ext_resource type="Resource" uid="uid://g6h7i8kak0l1" path="res://Resource/Event/event_map.tres" id="13_b1kjx"]
 
 [node name="MainGame" type="Control" unique_id=681661840]
 layout_mode = 3
@@ -143,4 +149,4 @@ layout_mode = 2
 
 [node name="EventManager" type="Node" parent="." unique_id=1248262272]
 script = ExtResource("2_cp47j")
-event_pool = Array[ExtResource("3_noc35")]([ExtResource("4_tsug7"), ExtResource("5_kwaul"), ExtResource("6_cr6pf"), ExtResource("7_tsug7")])
+event_pool = Array[ExtResource("3_noc35")]([ExtResource("4_tsug7"), ExtResource("5_kwaul"), ExtResource("6_cr6pf"), ExtResource("7_tsug7"), ExtResource("8_h2stg"), ExtResource("9_67h40"), ExtResource("10_6kscw"), ExtResource("11_gmmav"), ExtResource("12_kuqqk"), ExtResource("13_b1kjx")])

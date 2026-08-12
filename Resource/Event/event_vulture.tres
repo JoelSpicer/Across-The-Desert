@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="NarrativeEvent" format=3 uid="uid://f5g6h7i8kak0"]
+
+[ext_resource type="Script" uid="uid://tebrdjqw5ke" path="res://Scripts/NarrativeEvent.gd" id="1_vulture"]
+
+[resource]
+script = ExtResource("1_vulture")
+required_keywords = Array[String](["day"])
+event_text = "A massive desert vulture picks at the remains of a traveler in the beating sun. A functioning revolver cylinder and some dried meat sit right beneath the bird's talons."
+choice_1_text = "Shoot the bird to claim the loot."
+choice_2_text = "Wrestle it away with your bare hands."
+choice_1_ammo_cost = -1
+choice_1_food_cost = 1
+choice_1_gun_condition_cost = 30
+choice_2_gun_condition_cost = 30
+choice_2_grit_cost = -15
+choice_2_gives_affliction = "Exhausted"
+metadata/_custom_type_script = "uid://tebrdjqw5ke"

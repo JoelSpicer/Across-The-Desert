@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="NarrativeEvent" format=3 uid="uid://b1c2d3e4f5g6"]
+
+[ext_resource type="Script" uid="uid://tebrdjqw5ke" path="res://Scripts/NarrativeEvent.gd" id="1_hounds"]
+
+[resource]
+script = ExtResource("1_hounds")
+event_weight = 5
+required_keywords = Array[String](["night", "bleeding"])
+event_text = "The scent of your open wounds carries far on the cold breeze. A pack of starved desert hounds encircles you, their eyes reflecting the moonlight."
+choice_1_text = "Fire into the dark to scatter them."
+choice_2_text = "Run blindly into the night."
+choice_1_ammo_cost = -3
+choice_1_gun_condition_cost = -15
+choice_1_grit_cost = -10
+choice_1_gap_penalty = 5
+choice_2_water_cost = -5
+choice_2_grit_cost = -25
+choice_2_gap_penalty = 20
+metadata/_custom_type_script = "uid://tebrdjqw5ke"

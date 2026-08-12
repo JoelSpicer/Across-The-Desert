@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="NarrativeEvent" format=3 uid="uid://e4f5g6h7i8ka"]
+
+[ext_resource type="Script" uid="uid://tebrdjqw5ke" path="res://Scripts/NarrativeEvent.gd" id="1_wire"]
+
+[resource]
+script = ExtResource("1_wire")
+event_weight = 12
+event_text = "A tangled mass of rusted razor wire blocks a narrow pass between two towering rock formations. It is the fastest route forward, but the rusted barbs are treacherous."
+choice_1_text = "Force your way through the wire."
+choice_2_text = "Take the long way around."
+choice_1_grit_cost = -5
+choice_1_gap_penalty = -15
+choice_1_gives_affliction = "Bleeding"
+choice_2_water_cost = -10
+choice_2_gap_penalty = 20
+metadata/_custom_type_script = "uid://tebrdjqw5ke"
