@@ -15,6 +15,7 @@ extends Control
 @onready var label_debug_keywords = %DebugKeywordsLabel
 @onready var label_afflictions = %AfflictionsLabel
 
+@onready var combat_phase = %CombatPhase
 @onready var event_manager = $EventManager # Reference the new node
 
 # --- NEW: STAT TRACKING VARIABLES ---
@@ -34,6 +35,9 @@ const CAMP_PHASE_SCENE = preload("res://Scene/CampPhase.tscn")
 func _ready():
 	GameState.stats_changed.connect(update_hud)
 	GameState.player_died.connect(_on_player_died)
+	
+	# --- NEW: Listen for the combat victory signal ---
+	combat_phase.combat_won.connect(_on_combat_won)
 	
 	# Set the baseline before updating the HUD
 	prev_water = GameState.water
@@ -190,3 +194,13 @@ func animate_label(ui_element: Control, is_good: bool):
 	
 	# Phase 2: Smoothly fade back to default white over half a second
 	tween.tween_property(ui_element, "modulate", Color.WHITE, 2.0)
+
+# Called by the EventManager when a choice triggers a fight
+func trigger_combat_encounter(enemy_name: String):
+	combat_phase.start_combat(enemy_name)
+
+# Called automatically when the player wins the fight
+func _on_combat_won():
+	# Resume the normal game loop now that the threat is dead
+	GameState.advance_time()
+	event_manager.trigger_random_event()
