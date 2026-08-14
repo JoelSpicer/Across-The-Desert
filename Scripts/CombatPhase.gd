@@ -155,7 +155,7 @@ func _enemy_turn():
 	# If the enemy is exposed, they will prioritize finding cover
 	elif enemy_cover == 0:
 		enemy_cover += 1
-		_log_message("The " + enemy_name + " ducks behind cover.")
+		_log_message("The " + enemy_name + " ducks behind cover.\n")
 	# Otherwise, they will advance to get a better shot
 	elif distance > 1:
 		distance -= 1
@@ -186,9 +186,16 @@ func _enemy_shoot():
 # ------------------------------------------------------------------------
 # UTILITY FUNCTIONS
 # ------------------------------------------------------------------------
+# ------------------------------------------------------------------------
+# LOG MESSAGE HELPER
+# Adds new combat events to the log and formats them correctly
+# ------------------------------------------------------------------------
 func _log_message(msg: String):
-	# Appends new text to the bottom of the combat log
-	combat_log_label.text += "\n" + msg
+	# append_text() is specifically designed for RichTextLabels. 
+	# It adds the text to the bottom without redrawing the entire string,
+	# which ensures the 'scroll_following' property triggers correctly!
+	combat_log_label.append_text("\n" + msg)
+
 
 func _update_ui():
 	# Helper strings to translate numbers into readable UI text

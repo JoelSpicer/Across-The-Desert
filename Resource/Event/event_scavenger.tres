@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="NarrativeEvent" format=3 uid="uid://dxmv2y37ixoeb"]
+
+[ext_resource type="Script" uid="uid://tebrdjqw5ke" path="res://Scripts/NarrativeEvent.gd" id="1_scavenger"]
+
+[resource]
+script = ExtResource("1_scavenger")
+event_weight = 8
+required_keywords = Array[String](["ruins"])
+event_text = "As you pick through the concrete husk of a collapsed building, a shadow detaches from the wall. A desperate Scavenger levels a rusted scattergun at your chest. 'Drop the bag,' he rasps."
+choice_1_text = "Draw your weapon."
+choice_2_text = "Hand over your supplies."
+choice_1_triggers_combat = "Scavenger"
+choice_2_water_cost = -10
+choice_2_ammo_cost = -5
+choice_2_food_cost = -2
+choice_2_gap_penalty = 10
+metadata/_custom_type_script = "uid://tebrdjqw5ke"
