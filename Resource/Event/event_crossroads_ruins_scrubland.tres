@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="NarrativeEvent" format=3 uid="uid://oig0oqv3p5k0"]
+
+[ext_resource type="Script" uid="uid://tebrdjqw5ke" path="res://Scripts/NarrativeEvent.gd" id="1_overlook"]
+
+[resource]
+script = ExtResource("1_overlook")
+event_weight = 2
+forbidden_keywords = Array[String](["ruins", "scrubland"])
+event_text = "You crest a steep, rocky ridge. Below you, the landscape completely splits. To the west, the jagged remains of a collapsed concrete city jut from the sand. To the east, a sparse valley of tough brush and muddy watering holes."
+choice_1_text = "Descend into the Ruins."
+choice_2_text = "Head for the Scrubland."
+choice_1_biome_change = "ruins"
+choice_2_biome_change = "scrubland"
+metadata/_custom_type_script = "uid://tebrdjqw5ke"

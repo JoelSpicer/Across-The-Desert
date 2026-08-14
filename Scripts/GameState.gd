@@ -20,6 +20,10 @@ var is_dead: bool = false
 
 var inventory: Array[String] = []
 
+var current_biome: String = "dunes"
+
+var available_biomes: Array[String] = ["dunes", "flats", "canyons", "ruins", "scrubland"]
+
 
 signal stats_changed 
 signal player_died # New signal to tell the UI to change scenes
@@ -153,6 +157,20 @@ func process_afflictions():
 
 # --- TAG GENERATOR ---
 
+# --- NEW FUNCTION ---
+func set_biome(new_biome: String):
+	# Strip extra spaces and convert to lowercase so it perfectly matches our tags
+	current_biome = new_biome.strip_edges().to_lower()
+	# Tell the UI to update so the new biome name appears at the top of the screen
+	stats_changed.emit()
+
+# Function to randomly select a new biome from the list (for our current prototype)
+func randomize_biome():
+	# pick_random() is a built-in Godot function that grabs one random element from an array
+	current_biome = available_biomes.pick_random()
+	# We don't need to emit stats_changed here because advance_time() will handle it!
+
+# --- UPDATE EXISTING FUNCTION ---
 func get_current_keywords() -> Array[String]:
 	var keywords: Array[String] = []
 	
@@ -162,11 +180,14 @@ func get_current_keywords() -> Array[String]:
 	else:
 		keywords.append("night")
 		
-	# 2. Add current afflictions as tags (lowercase for safe string matching)
+	# 2. Add the current biome tag!
+	keywords.append(current_biome)
+		
+	# 3. Add current afflictions
 	for affliction in current_afflictions:
 		keywords.append(affliction.to_lower())
 		
-	# 3. Add inventory items as tags
+	# 4. Add inventory items
 	for item in inventory:
 		keywords.append(item.to_lower())
 		

@@ -62,8 +62,8 @@ func update_hud():
 	if not GameState.is_day:
 		time_string = "NIGHT (2x Grit Loss)"
 		
-	# Apply it to the new label
-	label_time.text = " | " + time_string + " | "
+	# Combine Biome and Time for a clean location header
+	label_time.text = " | " + GameState.current_biome.to_upper() + " - " + time_string + " | "
 	
 	# Keep your existing label updates
 	label_water.text = "Water: " + str(GameState.water) + " | "
@@ -189,4 +189,4 @@ func animate_label(ui_element: Control, is_good: bool):
 	tween.tween_property(ui_element, "modulate", flash_color, 0.1)
 	
 	# Phase 2: Smoothly fade back to default white over half a second
-	tween.tween_property(ui_element, "modulate", Color.WHITE, 1.0)
+	tween.tween_property(ui_element, "modulate", Color.WHITE, 2.0)

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="NarrativeEvent" format=3 uid="uid://drnculbb5cv8w"]
+
+[ext_resource type="Script" uid="uid://tebrdjqw5ke" path="res://Scripts/NarrativeEvent.gd" id="1_diverging"]
+
+[resource]
+script = ExtResource("1_diverging")
+event_weight = 2
+forbidden_keywords = Array[String](["canyons", "ruins"])
+event_text = "The Man in Black's footprints finally appear again, but they split. A fresh trail leads toward a dark, narrow fissure in a massive rock wall. An older, fading trail heads toward the crumbling skeletons of Old World towers."
+choice_1_text = "Follow the fresh tracks (Canyons)."
+choice_2_text = "Follow the old tracks (Ruins)."
+choice_1_gap_penalty = -10
+choice_1_biome_change = "canyons"
+choice_2_gap_penalty = 15
+choice_2_biome_change = "ruins"
+metadata/_custom_type_script = "uid://tebrdjqw5ke"

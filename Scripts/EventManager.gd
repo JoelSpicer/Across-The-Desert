@@ -58,20 +58,21 @@ func trigger_random_event():
 	get_parent().load_event(current_event)
 
 func process_choice(choice_num: int):
-	# Initialize variables to hold the stats before we modify them
+	# Initialize all base numerical cost variables to 0
 	var water_cost = 0
 	var gap_penalty = 0
 	var grit_cost = 0
 	var ammo_cost = 0
 	var gun_cost = 0
 	var food_cost = 0
-	var item_reward = ""
 	
-	# New Affliction Variables
+	# Initialize variables to hold strings (items, statuses, and our new biomes)
+	var item_reward = ""
 	var given_affliction = ""
 	var cured_affliction = ""
+	var biome_change = "" # NEW: Holds the biome transition string
 	
-	# 1. Grab the base costs from the resource
+	# 1. Grab the exact costs and strings from the currently loaded event resource
 	if choice_num == 1:
 		water_cost = current_event.choice_1_water_cost
 		gap_penalty = current_event.choice_1_gap_penalty
@@ -82,6 +83,7 @@ func process_choice(choice_num: int):
 		item_reward = current_event.choice_1_item_reward
 		given_affliction = current_event.choice_1_gives_affliction
 		cured_affliction = current_event.choice_1_cures_affliction
+		biome_change = current_event.choice_1_biome_change # NEW: Read the Choice 1 biome transition
 	elif choice_num == 2:
 		water_cost = current_event.choice_2_water_cost
 		gap_penalty = current_event.choice_2_gap_penalty
@@ -92,43 +94,50 @@ func process_choice(choice_num: int):
 		item_reward = current_event.choice_2_item_reward
 		given_affliction = current_event.choice_2_gives_affliction
 		cured_affliction = current_event.choice_2_cures_affliction
+		biome_change = current_event.choice_2_biome_change # NEW: Read the Choice 2 biome transition
 
-	# 2. Apply Day/Night Modifiers
+	# 2. Apply Day/Night Modifiers to the base costs
 	if GameState.is_day:
-		# If the water cost is a penalty (negative), double the loss. 
-		# If it is positive (finding water), leave it alone.
-		if water_cost < 0:
+		# Double water loss during the hot day (only multiplies negative numbers)
+		if water_cost < 0: 
 			water_cost *= 2 
 	else:
-		# Night time: Negate water loss entirely, but allow water gain
-		if water_cost < 0:
+		# Negate water loss at night
+		if water_cost < 0: 
 			water_cost = 0 
-			
-		# The dark plays tricks on the mind: Double any Grit damage taken
-		if grit_cost < 0:
+		# Double grit loss due to the horrors of the dark
+		if grit_cost < 0: 
 			grit_cost *= 2
-			
-		# Close the gap slightly faster at night
+		# Player can move faster/stealthier at night, reducing the gap penalty by 5
 		gap_penalty -= 5 
 
-	# 3. Apply the final modified values to GameState
+	# 3. Apply all the final mathematically modified values to the GameState
 	GameState.modify_water(water_cost)
 	GameState.modify_grit(grit_cost)
 	GameState.modify_ammo(ammo_cost)
 	GameState.modify_gun_condition(gun_cost)
 	GameState.modify_gap(gap_penalty)
 	GameState.modify_food(food_cost)
+	
+	# 4. Process Inventory, Afflictions, and Biome Changes
 	GameState.add_item(item_reward)
 	GameState.add_affliction(given_affliction)
 	GameState.remove_affliction(cured_affliction)
 	
-	# Apply ongoing status effects (like Bleeding damage)
+	# NEW: If the event choice included a biome string, update the global game state
+	if biome_change != "":
+		GameState.set_biome(biome_change)
+
+	# 5. Apply ongoing status effects (like bleeding draining grit every turn)
 	GameState.process_afflictions()
-	
-	# 4. Check for death before continuing
+
+	# 6. Check for death before continuing to the next event
 	if GameState.is_dead:
 		return 
 
-	# 5. Advance the clock and load the next event
+	# 7. Advance the clock and pull the next event
 	GameState.advance_time()
+	
+	# NOTE: We have removed GameState.randomize_biome() so the player actually 
+	# stays in the biome they chose until they hit another crossroads event!
 	trigger_random_event()

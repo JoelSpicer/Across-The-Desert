@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="NarrativeEvent" format=3 uid="uid://bjhr7ocb582uh"]
+
+[ext_resource type="Script" uid="uid://tebrdjqw5ke" path="res://Scripts/NarrativeEvent.gd" id="1_f2nui"]
+
+[resource]
+script = ExtResource("1_f2nui")
+event_weight = 2
+forbidden_keywords = Array[String](["canyons", "flats"])
+event_text = "The endless dunes finally break. To the north, a deep, shadowed canyon cuts through the rock. To the east, a sprawling, blindingly white salt flat stretches to the horizon. Where did he go?"
+choice_1_text = "Enter the Canyons."
+choice_2_text = "Cross the Salt Flats."
+choice_1_biome_change = "canyons"
+choice_2_biome_change = "flats"
+metadata/_custom_type_script = "uid://tebrdjqw5ke"

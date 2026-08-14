@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="NarrativeEvent" format=3 uid="uid://cv8ywpvc4deai"]
+
+[ext_resource type="Script" uid="uid://tebrdjqw5ke" path="res://Scripts/NarrativeEvent.gd" id="1_sinkhole"]
+
+[resource]
+script = ExtResource("1_sinkhole")
+event_weight = 2
+forbidden_keywords = Array[String](["dunes", "flats"])
+event_text = "The ground suddenly violently shakes. A massive sinkhole collapses behind you in a cloud of dust, completely swallowing your path back. Ahead, you can either climb the towering mountains of sand or descend toward a blinding expanse of white salt."
+choice_1_text = "Climb into the Dunes."
+choice_2_text = "Walk the Salt Flats."
+choice_1_biome_change = "dunes"
+choice_2_gap_penalty = 5
+choice_2_biome_change = "flats"
+metadata/_custom_type_script = "uid://tebrdjqw5ke"
