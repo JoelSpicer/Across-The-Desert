@@ -4,12 +4,11 @@
 
 [resource]
 script = ExtResource("1_scavenger")
-event_weight = 8
-required_keywords = Array[String](["ruins"])
-event_text = "As you pick through the concrete husk of a collapsed building, a shadow detaches from the wall. A desperate Scavenger levels a rusted scattergun at your chest. 'Drop the bag,' he rasps."
+event_weight = 50
+event_text = "As you pick through the concrete husk of a collapsed building, a shadow detaches from the wall. A desperate Scavenger levels a rusted scattergun at your chest, as his mangy dog growls menacingly. 'Drop the bag,' he rasps."
 choice_1_text = "Draw your weapon."
 choice_2_text = "Hand over your supplies."
-choice_1_triggers_combat = "Scavenger"
+choice_1_triggers_combat = "Desert Hound:melee, Scavenger:ranged"
 choice_2_water_cost = -10
 choice_2_ammo_cost = -5
 choice_2_food_cost = -2
