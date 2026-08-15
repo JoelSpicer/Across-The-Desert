@@ -14,6 +14,7 @@ extends Control
 
 @onready var label_debug_keywords = %DebugKeywordsLabel
 @onready var label_afflictions = %AfflictionsLabel
+@onready var settlement_phase = %SettlementPhase
 
 @onready var combat_phase = %CombatPhase
 @onready var event_manager = $EventManager # Reference the new node
@@ -38,6 +39,7 @@ func _ready():
 	
 	# --- NEW: Listen for the combat victory signal ---
 	combat_phase.combat_won.connect(_on_combat_won)
+	settlement_phase.left_settlement.connect(_on_left_settlement)
 	
 	# Set the baseline before updating the HUD
 	prev_water = GameState.water
@@ -202,5 +204,16 @@ func trigger_combat_encounter(enemy_name: String):
 # Called automatically when the player wins the fight
 func _on_combat_won():
 	# Resume the normal game loop now that the threat is dead
+	GameState.advance_time()
+	event_manager.trigger_random_event()
+
+# --- NEW SETTLEMENT FLOW FUNCTIONS ---
+
+# Called by the EventManager when a choice triggers a town
+func open_settlement_encounter(settlement_name: String):
+	settlement_phase.open_settlement(settlement_name)
+
+# Called automatically when the player clicks "Leave"
+func _on_left_settlement():
 	GameState.advance_time()
 	event_manager.trigger_random_event()

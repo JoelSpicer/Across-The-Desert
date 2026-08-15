@@ -69,6 +69,7 @@ func process_choice(choice_num: int):
 	var given_affliction = ""
 	var cured_affliction = ""
 	var biome_change = "" 
+	var settlement_name = ""
 	
 	var combat_enemy = "" # NEW: Holds the enemy name
 	
@@ -85,6 +86,7 @@ func process_choice(choice_num: int):
 		cured_affliction = current_event.choice_1_cures_affliction
 		biome_change = current_event.choice_1_biome_change 
 		combat_enemy = current_event.choice_1_triggers_combat # NEW
+		settlement_name = current_event.choice_1_opens_settlement
 	elif choice_num == 2:
 		water_cost = current_event.choice_2_water_cost
 		gap_penalty = current_event.choice_2_gap_penalty
@@ -97,6 +99,7 @@ func process_choice(choice_num: int):
 		cured_affliction = current_event.choice_2_cures_affliction
 		biome_change = current_event.choice_2_biome_change 
 		combat_enemy = current_event.choice_2_triggers_combat # NEW
+		settlement_name = current_event.choice_2_opens_settlement
 
 	# 2. Apply Day/Night Modifiers
 	if GameState.is_day:
@@ -134,6 +137,10 @@ func process_choice(choice_num: int):
 		# Tell the MainGame to open the combat screen and pass the enemy name
 		get_parent().trigger_combat_encounter(combat_enemy)
 		# Crucial: We return here so we DON'T advance time or pull the next event yet!
+		return
+	
+	if settlement_name != "":
+		get_parent().open_settlement_encounter(settlement_name)
 		return
 
 	# 8. If no combat, advance time and pull the next event normally

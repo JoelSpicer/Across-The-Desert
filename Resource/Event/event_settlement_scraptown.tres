@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="NarrativeEvent" format=3 uid="uid://0jk1oipdelev"]
+
+[ext_resource type="Script" uid="uid://tebrdjqw5ke" path="res://Scripts/NarrativeEvent.gd" id="1_scraptown"]
+
+[resource]
+script = ExtResource("1_scraptown")
+event_weight = 50
+event_text = "Nestled between two collapsed concrete towers is a makeshift barricade of rusted car chassis and barbed wire. A guard atop a shipping container lowers his rifle as you approach. 'Welcome to Scrap Town, drifter. Keep your hands where I can see them.'"
+choice_1_text = "Enter Scrap Town to trade."
+choice_2_text = "Keep moving. You don't have time to stop."
+choice_1_gap_penalty = 10
+choice_1_opens_settlement = "Scrap Town"
+choice_2_grit_cost = -5
+choice_2_gap_penalty = -10
+metadata/_custom_type_script = "uid://tebrdjqw5ke"

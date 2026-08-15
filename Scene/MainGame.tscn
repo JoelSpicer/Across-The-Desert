@@ -18,7 +18,9 @@
 [ext_resource type="Resource" uid="uid://cv8ywpvc4deai" path="res://Resource/Event/event_crossroads_dunes_flats.tres" id="16_fdwl7"]
 [ext_resource type="Resource" uid="uid://oig0oqv3p5k0" path="res://Resource/Event/event_crossroads_ruins_scrubland.tres" id="17_tix3s"]
 [ext_resource type="PackedScene" uid="uid://cb20sqytd55vh" path="res://Scene/CombatPhase.tscn" id="18_3u5f0"]
-[ext_resource type="Resource" uid="uid://dxmv2y37ixoeb" path="res://Resource/Event/event_scavenger.tres" id="18_fdwl7"]
+[ext_resource type="Resource" uid="uid://dxmv2y37ixoeb" path="res://Resource/Event/event_combat_scavenger.tres" id="18_fdwl7"]
+[ext_resource type="Resource" uid="uid://0jk1oipdelev" path="res://Resource/Event/event_settlement_scraptown.tres" id="19_e641i"]
+[ext_resource type="PackedScene" uid="uid://qwxj1tnvrd36" path="res://Scene/SettlementPhase.tscn" id="19_tix3s"]
 
 [node name="MainGame" type="Control" unique_id=681661840]
 layout_mode = 3
@@ -155,7 +157,12 @@ layout_mode = 2
 
 [node name="EventManager" type="Node" parent="." unique_id=1248262272]
 script = ExtResource("2_cp47j")
-event_pool = Array[ExtResource("3_noc35")]([ExtResource("4_tsug7"), ExtResource("5_kwaul"), ExtResource("6_cr6pf"), ExtResource("7_tsug7"), ExtResource("8_h2stg"), ExtResource("9_67h40"), ExtResource("10_6kscw"), ExtResource("11_gmmav"), ExtResource("12_kuqqk"), ExtResource("13_b1kjx"), ExtResource("14_klqy8"), ExtResource("15_3u5f0"), ExtResource("16_fdwl7"), ExtResource("17_tix3s"), ExtResource("18_fdwl7")])
+event_pool = Array[ExtResource("3_noc35")]([ExtResource("4_tsug7"), ExtResource("5_kwaul"), ExtResource("6_cr6pf"), ExtResource("7_tsug7"), ExtResource("8_h2stg"), ExtResource("9_67h40"), ExtResource("10_6kscw"), ExtResource("11_gmmav"), ExtResource("12_kuqqk"), ExtResource("13_b1kjx"), ExtResource("14_klqy8"), ExtResource("15_3u5f0"), ExtResource("16_fdwl7"), ExtResource("17_tix3s"), ExtResource("18_fdwl7"), ExtResource("19_e641i")])
+
+[node name="SettlementPhase" parent="." unique_id=233874774 instance=ExtResource("19_tix3s")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
 
 [node name="CombatPhase" parent="." unique_id=1819485237 instance=ExtResource("18_3u5f0")]
 unique_name_in_owner = true

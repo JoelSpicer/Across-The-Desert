@@ -23,6 +23,7 @@ class_name NarrativeEvent
 @export var choice_1_cures_affliction: String = "" 
 @export var choice_1_biome_change: String = "" 
 @export var choice_1_triggers_combat: String = "" # NEW: Type the enemy name here (e.g., "Desert Hound")
+@export var choice_1_opens_settlement: String = "" # E.g., type "Scrap Town" or "Wandering Merchant"
 
 @export_group("Choice 2 Effects")
 @export var choice_2_water_cost: int = 0
@@ -37,3 +38,4 @@ class_name NarrativeEvent
 @export var choice_2_cures_affliction: String = ""
 @export var choice_2_biome_change: String = "" 
 @export var choice_2_triggers_combat: String = "" # NEW: Type the enemy name here
+@export var choice_2_opens_settlement: String = ""

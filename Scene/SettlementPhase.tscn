@@ -1,0 +1,88 @@
+[gd_scene format=3 uid="uid://qwxj1tnvrd36"]
+
+[ext_resource type="Script" uid="uid://b34bkuexp0cap" path="res://Scripts/SettlementPhase.gd" id="1_settle"]
+
+[node name="SettlementPhase" type="Control" unique_id=531117985]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_settle")
+
+[node name="BackgroundDimmer" type="ColorRect" parent="." unique_id=1975565512]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.78431374)
+
+[node name="TextPanel" type="PanelContainer" parent="." unique_id=757811964]
+custom_minimum_size = Vector2(800, 200)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -400.0
+offset_top = 30.0
+offset_right = 400.0
+offset_bottom = 230.0
+grow_horizontal = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TextPanel" unique_id=1968578681]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LabelTitle" type="Label" parent="TextPanel/VBoxContainer" unique_id=365699994]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LabelFeedback" type="RichTextLabel" parent="TextPanel/VBoxContainer" unique_id=307836419]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+scroll_following = true
+autowrap_mode = 2
+horizontal_alignment = 1
+
+[node name="ButtonVBox" type="VBoxContainer" parent="." unique_id=1235064921]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -150.0
+offset_top = -250.0
+offset_right = 150.0
+offset_bottom = -50.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 15
+
+[node name="BtnBuyWater" type="Button" parent="ButtonVBox" unique_id=1955075103]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Buy Water (2 Ammo)"
+
+[node name="BtnBuyFood" type="Button" parent="ButtonVBox" unique_id=1460833658]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Buy Food (3 Ammo)"
+
+[node name="BtnDoctor" type="Button" parent="ButtonVBox" unique_id=1891008141]
+unique_name_in_owner = true
+layout_mode = 2
+text = "See Doctor (5 Ammo)"
+
+[node name="BtnLeave" type="Button" parent="ButtonVBox" unique_id=1635653656]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Leave Settlement"
