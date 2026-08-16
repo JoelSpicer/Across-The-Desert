@@ -82,6 +82,11 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "See Doctor (5 Ammo)"
 
+[node name="BtnSpecial" type="Button" parent="ButtonVBox" unique_id=308120958]
+unique_name_in_owner = true
+layout_mode = 2
+text = "BtnSpecial"
+
 [node name="BtnLeave" type="Button" parent="ButtonVBox" unique_id=1635653656]
 unique_name_in_owner = true
 layout_mode = 2

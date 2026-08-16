@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="NarrativeEvent" format=3 uid="uid://settle3oasis"]
+
+[ext_resource type="Script" uid="uid://tebrdjqw5ke" path="res://Scripts/NarrativeEvent.gd" id="1_oasis"]
+
+[resource]
+script = ExtResource("1_oasis")
+# Slightly higher weight so players can reliably find it in the scrubland
+event_weight = 10
+# Scrubland makes the most sense for a lush watering hole
+required_keywords = Array[String](["scrubland"])
+forbidden_keywords = Array[String]([])
+# The narrative text setting the scene
+event_text = "You stumble upon a rare patch of hardy desert brush surrounding a murky watering hole. A group of heavily armed nomads have set up a small bazaar of tents near the water. They watch you carefully, but their weapons remain holstered."
+# Button 1 text
+choice_1_text = "Enter the Oasis bazaar."
+# Button 2 text
+choice_2_text = "Skirt around the camp."
+# Stopping at the bazaar takes a significant amount of time
+choice_1_gap_penalty = 10
+# This exact string matches the dictionary key in SettlementPhase.gd
+choice_1_opens_settlement = "Oasis Traders"
+# Bypassing the camp saves time but costs Grit as you walk away from water
+choice_2_gap_penalty = -10
+choice_2_grit_cost = -5
+metadata/_custom_type_script = "uid://tebrdjqw5ke"
