@@ -1,24 +1,15 @@
-[gd_resource type="Resource" script_class="NarrativeEvent" format=3 uid="uid://settle2hermit"]
+[gd_resource type="Resource" script_class="NarrativeEvent" format=3 uid="uid://cw7c76eg4x4hr"]
 
 [ext_resource type="Script" uid="uid://tebrdjqw5ke" path="res://Scripts/NarrativeEvent.gd" id="1_hermit"]
 
 [resource]
 script = ExtResource("1_hermit")
-# Standard spawn weight
 event_weight = 8
-# This event makes the most thematic sense hidden in the rocky canyons
 required_keywords = Array[String](["canyons"])
-forbidden_keywords = Array[String]([])
-# The narrative text setting the scene
 event_text = "Tucked deeply into a fissure in the canyon wall is a shack built from scavenged sheet metal. A paranoid old man peers at you through a slit in the door, wearing a heavily stained surgical apron. 'You bleeding? I can fix bleeding,' he mutters."
-# Button 1 text
 choice_1_text = "Approach the Hermit's shack."
-# Button 2 text
 choice_2_text = "Back away slowly."
-# Taking time to stop and interact gives the Man in Black a slight lead
 choice_1_gap_penalty = 5
-# This exact string matches the dictionary key in SettlementPhase.gd
 choice_1_opens_settlement = "Hermit's Shack"
-# Ignoring the hermit keeps your pace up, saving Gap distance
 choice_2_gap_penalty = -5
 metadata/_custom_type_script = "uid://tebrdjqw5ke"

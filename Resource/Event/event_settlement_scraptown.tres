@@ -4,7 +4,8 @@
 
 [resource]
 script = ExtResource("1_scraptown")
-event_weight = 50
+event_weight = 8
+required_keywords = Array[String](["ruins"])
 event_text = "Nestled between two collapsed concrete towers is a makeshift barricade of rusted car chassis and barbed wire. A guard atop a shipping container lowers his rifle as you approach. 'Welcome to Scrap Town, drifter. Keep your hands where I can see them.'"
 choice_1_text = "Enter Scrap Town to trade."
 choice_2_text = "Keep moving. You don't have time to stop."
