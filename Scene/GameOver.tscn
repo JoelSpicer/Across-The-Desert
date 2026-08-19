@@ -35,14 +35,18 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="LabelTitle" type="Label" parent="VBoxContainer" unique_id=48473349]
+unique_name_in_owner = true
 layout_mode = 2
+text = "labeltitle"
 
 [node name="DeathMessage" type="Label" parent="VBoxContainer" unique_id=321246323]
+unique_name_in_owner = true
 layout_mode = 2
 text = "deathmessage"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="RestartButton" type="Button" parent="VBoxContainer" unique_id=1039843180]
+unique_name_in_owner = true
 layout_mode = 2
 text = "The Wheel Turns (Restart)"

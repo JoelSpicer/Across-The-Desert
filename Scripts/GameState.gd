@@ -26,8 +26,11 @@ var available_biomes: Array[String] = ["dunes", "flats", "canyons", "ruins", "sc
 
 
 signal stats_changed 
-signal player_died # New signal to tell the UI to change scenes
-signal boss_encounter_triggered
+signal player_died
+signal boss_encounter_triggered 
+
+# Tells the engine to ignore the warning, since MainGame.gd emits this!
+@warning_ignore("unused_signal")
 signal game_won
 
 func modify_water(amount: int):

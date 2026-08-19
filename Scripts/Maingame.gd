@@ -36,14 +36,13 @@ const CAMP_PHASE_SCENE = preload("res://Scene/CampPhase.tscn")
 func _ready():
 	GameState.stats_changed.connect(update_hud)
 	GameState.player_died.connect(_on_player_died)
-	combat_phase.combat_won.connect(_on_combat_won)
-	
-	# --- NEW: Listen for the combat victory signal ---
-	combat_phase.combat_won.connect(_on_combat_won)
+	if not combat_phase.combat_won.is_connected(_on_combat_won):
+		combat_phase.combat_won.connect(_on_combat_won)
 	settlement_phase.left_settlement.connect(_on_left_settlement)
 	
 	# NEW: Listen for the moment the player catches the Man in Black
-	GameState.boss_encounter_triggered.connect(_on_boss_encounter_triggered)
+	if not GameState.boss_encounter_triggered.is_connected(_on_boss_encounter_triggered):
+		GameState.boss_encounter_triggered.connect(_on_boss_encounter_triggered)
 	
 	# Set the baseline before updating the HUD
 	prev_water = GameState.water
