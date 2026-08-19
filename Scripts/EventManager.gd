@@ -1,6 +1,10 @@
 extends Node
 
 @export var event_pool: Array[NarrativeEvent] = []
+var recent_events: Array[NarrativeEvent] = []
+# How many events to remember. 
+# 2 means an event can't repeat until at least 2 other things happen.
+var max_history_size: int = 5
 var current_event: NarrativeEvent
 
 # Reference to the main UI to pass the event data
@@ -14,11 +18,12 @@ func _ready():
 
 func trigger_random_event():
 	var valid_events: Array[NarrativeEvent] = []
-	var total_weight: int = 0
 	var current_tags = GameState.get_current_keywords()
 	
-	# 1. Filter the event pool based on conditions
-	for event in event_pool: # Assuming your loaded array is called 'events'
+	# ------------------------------------------------------------------------
+	# 1. INITIAL FILTERING (Tags & Keywords)
+	# ------------------------------------------------------------------------
+	for event in event_pool: 
 		var is_valid = true
 		
 		# Check required keywords
@@ -34,27 +39,62 @@ func trigger_random_event():
 					is_valid = false
 					break
 		
-		# If it passes, add to the valid pool and calculate total weight
+		# If it passes, add to the valid pool
 		if is_valid:
 			valid_events.append(event)
-			total_weight += event.event_weight
 			
-	# 2. Fallback to prevent crashes if the table is empty
+	# Fallback to prevent crashes if the table is totally empty
 	if valid_events.is_empty():
 		print("ERROR: No valid events found for current tags!")
 		return
 		
-	# 3. Roll the weighted dice
+	# ------------------------------------------------------------------------
+	# 2. COOLDOWN FILTER (History Buffer)
+	# ------------------------------------------------------------------------
+	var filtered_events: Array[NarrativeEvent] = []
+	for event in valid_events:
+		# Only add the event if it IS NOT in our recent history memory
+		if not event in recent_events:
+			filtered_events.append(event)
+			
+	# Failsafe: If the pool is so small that the cooldown blocked everything,
+	# we ignore the history buffer for this turn so the game doesn't crash.
+	if filtered_events.is_empty():
+		filtered_events = valid_events
+		recent_events.clear() 
+		print("DEBUG: Event pool too small. Clearing history buffer.")
+		
+	# ------------------------------------------------------------------------
+	# 3. CALCULATE WEIGHTS & ROLL
+	# Note: We must calculate total_weight AFTER filtering out the recent events!
+	# ------------------------------------------------------------------------
+	var total_weight: int = 0
+	for event in filtered_events:
+		total_weight += event.event_weight
+		
 	var roll = randi() % total_weight
 	var current_weight = 0
 	
-	for event in valid_events:
+	for event in filtered_events:
 		current_weight += event.event_weight
 		if roll < current_weight:
 			current_event = event
 			break
 			
-	# 4. Send the chosen event to the UI
+	# ------------------------------------------------------------------------
+	# 4. UPDATE HISTORY MEMORY
+	# ------------------------------------------------------------------------
+	# Add the newly chosen event to the end of the memory list
+	recent_events.append(current_event)
+	
+	# If the memory list gets too long, pop the oldest one off the front
+	if recent_events.size() > max_history_size:
+		recent_events.pop_front()
+			
+	# ------------------------------------------------------------------------
+	# 5. EXECUTE
+	# ------------------------------------------------------------------------
+	# Send the chosen event to the UI
 	get_parent().load_event(current_event)
 
 func process_choice(choice_num: int):

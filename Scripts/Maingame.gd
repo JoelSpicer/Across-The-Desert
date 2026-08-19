@@ -63,7 +63,10 @@ func _ready():
 		event_manager.trigger_random_event()
 
 func update_hud():
-	# Determine if it is Day or Night
+	# ------------------------------------------------------------------------
+	# 1. TIME & LOCATION DISPLAY
+	# Determine if it is Day or Night to show current survival penalties
+	# ------------------------------------------------------------------------
 	var time_string = "DAY (2x Water Loss)"
 	if not GameState.is_day:
 		time_string = "NIGHT (2x Grit Loss)"
@@ -71,20 +74,26 @@ func update_hud():
 	# Combine Biome and Time for a clean location header
 	label_time.text = " | " + GameState.current_biome.to_upper() + " - " + time_string + " | "
 	
-	# Keep your existing label updates
+	# ------------------------------------------------------------------------
+	# 2. CORE STAT LABELS
+	# Update numerical HUD values directly from the GameState singleton
+	# ------------------------------------------------------------------------
 	label_water.text = "Water: " + str(GameState.water) + " | "
 	label_grit.text = "Grit: " + str(GameState.current_grit) + " | "
 	label_gap.text = "Gap: " + str(GameState.gap_distance) + " | "
 	label_gun.text = "Gun: " + str(GameState.gun_condition) + "%" + " | "
 	label_ammo.text = "Ammo: " + str(GameState.ammo) + " | "
 	
+	# ------------------------------------------------------------------------
+	# 3. INVENTORY & CAMP DISPLAY
+	# ------------------------------------------------------------------------
 	if GameState.inventory.is_empty():
 		label_inventory_list.text = "[Empty]"
 	else:
-		# The "\n" automatically puts a line break between each item in the array
+		# "\n" places a line break between each item in the array for clean sidebar listing
 		label_inventory_list.text = "\n".join(GameState.inventory)
 	
-	# Check food and update the Camp button
+	# Enable or disable the Camp button based on available food supplies
 	if GameState.food > 0:
 		btn_make_camp.disabled = false
 		btn_make_camp.text = "Make Camp (-1 Food | Stock: " + str(GameState.food) + ")"
@@ -92,22 +101,55 @@ func update_hud():
 		btn_make_camp.disabled = true
 		btn_make_camp.text = "No Food to Camp"
 		
+	# ------------------------------------------------------------------------
+	# 4. DEBUG TAGS & STATUS AFFLICTIONS
+	# ------------------------------------------------------------------------
 	var current_tags = GameState.get_current_keywords()
-	
 	if current_tags.is_empty():
 		label_debug_keywords.text = "DEBUG TAGS:\n[None]"
 	else:
-		# Join the tags with a comma and a space so it reads cleanly
+		# Join active tags with commas for readable debugging outpu
 		label_debug_keywords.text = "DEBUG TAGS:\n" + ", ".join(current_tags)
 		
-	# Update the Afflictions UI
+	# Update the Afflictions status container
 	if GameState.current_afflictions.is_empty():
 		label_afflictions.text = "Status: Healthy"
 	else:
 		label_afflictions.text = "AFFLICTIONS:\n" + "\n".join(GameState.current_afflictions).capitalize()
-		
-		# --- NEW: ANIMATE STAT CHANGES ---
 	
+	# ------------------------------------------------------------------------
+	# 5. NARRATIVE CHOICE BUTTONS & ITEM LOCKS
+	# Update button text and check for required inventory items
+	# ------------------------------------------------------------------------
+	if event_manager.current_event != null:
+		var current_event = event_manager.current_event
+		
+		# --- Choice 1 Setup ---
+		btn_choice_1.text = current_event.choice_1_text
+		# If a required item is specified and missing from inventory, lock the button
+		if current_event.choice_1_required_item != "" and not GameState.inventory.has(current_event.choice_1_required_item):
+			btn_choice_1.disabled = true
+			btn_choice_1.text += "\n(Requires: " + current_event.choice_1_required_item + ")"
+		else:
+			btn_choice_1.disabled = false
+
+		# --- Choice 2 Setup ---
+		if current_event.choice_2_text != "":
+			btn_choice_2.show()
+			btn_choice_2.text = current_event.choice_2_text
+			# If a required item is specified and missing from inventory, lock the button
+			if current_event.choice_2_required_item != "" and not GameState.inventory.has(current_event.choice_2_required_item):
+				btn_choice_2.disabled = true
+				btn_choice_2.text += "\n(Requires: " + current_event.choice_2_required_item + ")"
+			else:
+				btn_choice_2.disabled = false
+		else:
+			btn_choice_2.hide()
+
+	# ------------------------------------------------------------------------
+	# 6. ANIMATE STAT CHANGES
+	# Trigger flash/tween animations when current values diverge from previous snapshots
+	# ------------------------------------------------------------------------
 	# 1. Water
 	if GameState.water != prev_water:
 		animate_label(label_water, GameState.water > prev_water)
@@ -118,7 +160,7 @@ func update_hud():
 		animate_label(label_grit, GameState.current_grit > prev_grit)
 		prev_grit = GameState.current_grit
 		
-	# 3. Gap (Note: Gap is GOOD when the number goes DOWN, so the logic is inverted!)
+	# 3. Gap (Gap is positive when the number decreases, so the check is inverted)
 	if GameState.gap_distance != prev_gap:
 		animate_label(label_gap, GameState.gap_distance < prev_gap) 
 		prev_gap = GameState.gap_distance
@@ -133,26 +175,20 @@ func update_hud():
 		animate_label(label_ammo, GameState.ammo > prev_ammo)
 		prev_ammo = GameState.ammo
 		
-	# 6. Food (We animate the Make Camp button since that's where food is displayed!)
+	# 6. Food (Animates the camp button where food inventory is shown)
 	if GameState.food != prev_food:
 		animate_label(btn_make_camp, GameState.food > prev_food)
 		prev_food = GameState.food
 	
 	# 7. Inventory
-	# Check if the array has changed at all
 	if GameState.inventory != prev_inventory:
-		# If the new array is bigger, we gained an item (Good)
 		var gained_item = GameState.inventory.size() > prev_inventory.size()
 		animate_label(label_inventory_list, gained_item)
-		# Take a new snapshot
 		prev_inventory = GameState.inventory.duplicate()
 		
-	# 8. Afflictions
+	# 8. Afflictions (Gaining an affliction is harmful, so invert the boolean)
 	if GameState.current_afflictions != prev_afflictions:
-		# If the new array is bigger, we gained an affliction
 		var gained_affliction = GameState.current_afflictions.size() > prev_afflictions.size()
-		# We use "not gained_affliction" here because gaining a status is BAD! 
-		# This makes it flash Red when you get hurt, and Green when you cure it.
 		animate_label(label_afflictions, not gained_affliction)
 		prev_afflictions = GameState.current_afflictions.duplicate()
 

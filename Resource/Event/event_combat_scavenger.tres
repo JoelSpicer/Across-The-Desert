@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource("1_scavenger")
+event_weight = 6
 required_keywords = Array[String](["ruins"])
 event_text = "As you pick through the concrete husk of a collapsed building, a shadow detaches from the wall. A desperate Scavenger levels a rusted scattergun at your chest, as his mangy dog growls menacingly. 'Drop the bag,' he rasps."
 choice_1_text = "Draw your weapon."
