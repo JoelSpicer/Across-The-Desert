@@ -34,6 +34,9 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="LabelTitle" type="Label" parent="VBoxContainer" unique_id=48473349]
+layout_mode = 2
+
 [node name="DeathMessage" type="Label" parent="VBoxContainer" unique_id=321246323]
 layout_mode = 2
 text = "deathmessage"

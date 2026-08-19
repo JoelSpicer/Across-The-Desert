@@ -35,38 +35,42 @@ var combat_active: bool = false
 # INITIALIZATION & PARSING
 # Called by MainGame.gd when an event triggers a fight
 # ------------------------------------------------------------------------
+# ------------------------------------------------------------------------
+# INITIALIZATION & PARSING
+# ------------------------------------------------------------------------
 func start_combat(combat_string: String):
-	# Clear the battlefield from any previous encounters
 	active_enemies.clear()
 	player_cover = 0
 	combat_active = true
 	
-	# Parse the comma-separated string from the narrative event (e.g., "Hound:melee, Scavenger:ranged")
 	var enemy_definitions = combat_string.split(",")
 	for def in enemy_definitions:
 		def = def.strip_edges()
-		if def == "": continue # Skip empty strings just in case of formatting errors
+		if def == "": continue 
 		
 		var is_melee = false
 		var enemy_name = def
+		var hp = 1 # By default, all standard enemies die in 1 hit
 		
-		# Check if a specific combat style was tagged using a colon
 		if ":" in def:
 			var parts = def.split(":")
 			enemy_name = parts[0].strip_edges()
-			# If tagged as melee, they will use charge/lunge logic instead of seeking cover
-			if parts[1].strip_edges().to_lower() == "melee":
+			var modifier = parts[1].strip_edges().to_lower()
+			
+			if modifier == "melee":
 				is_melee = true
+			elif modifier == "boss":
+				# The boss is ranged, but takes 3 shots/strikes to kill
+				hp = 3 
 				
-		# Construct the enemy profile and add it to the active battlefield array
 		active_enemies.append({
 			"name": enemy_name,
 			"is_melee": is_melee,
-			"distance": 3, # 3 = Far, 2 = Mid, 1 = Close, 0 = Melee range
-			"cover": 0     # Enemies always start exposed
+			"distance": 3, 
+			"cover": 0,    
+			"hp": hp       # NEW: Store the health points in the dictionary
 		})
 	
-	# Reveal the UI and announce the start of the fight
 	show()
 	_log_message("COMBAT STARTED! Threats detected: " + str(active_enemies.size()))
 	_update_ui()
@@ -85,8 +89,10 @@ func _ready():
 # ------------------------------------------------------------------------
 # PLAYER ACTIONS
 # ------------------------------------------------------------------------
+# ------------------------------------------------------------------------
+# SHOOT LOGIC
+# ------------------------------------------------------------------------
 func _on_btn_shoot_pressed():
-	# Ignore clicks if the fight is over or the AI is taking its turn
 	if not combat_active or active_enemies.is_empty(): return
 	
 	if GameState.ammo <= 0:
@@ -94,80 +100,79 @@ func _on_btn_shoot_pressed():
 		_enemy_phase()
 		return
 		
-	# --- JAM MECHANIC ---
-	# If gun condition drops below 60%, the gun starts failing
 	var jam_chance = 0
 	if GameState.gun_condition < 60:
 		jam_chance = 60 - GameState.gun_condition
 		
-	# Roll a 100-sided die. If the roll is lower than the jam chance, the gun misfires.
 	if randi() % 100 < jam_chance:
 		_log_message("CLACK. Your poorly maintained weapon jams! You frantically clear the chamber.")
-		# Fumbling with a jammed gun wastes the turn and slightly degrades the weapon more
 		GameState.modify_gun_condition(-2) 
 		_enemy_phase()
 		return
 		
-	# Normal firing mechanics cost 1 ammo and standard wear-and-tear
 	GameState.modify_ammo(-1)
 	GameState.modify_gun_condition(-5)
 	
-	# Automatically target the enemy that is easiest to hit
 	var target = _get_best_target()
 	_log_message("You fire at the " + target.name + "...")
 	
-	# Base accuracy is 80%. Penalties apply for distance and enemy cover.
 	var hit_chance = 80 - (target.distance * 15) - (target.cover * 30)
-	
-	# A heavily degraded gun (below 50%) loses 20% accuracy
-	if GameState.gun_condition < 50: 
-		hit_chance -= 20
+	if GameState.gun_condition < 50: hit_chance -= 20
 		
 	if randi() % 100 < hit_chance:
-		_log_message("A direct hit! The " + target.name + " goes down.")
-		active_enemies.erase(target) # Remove the dead enemy from the array
+		# NEW: Reduce HP instead of instantly killing
+		target.hp -= 1
 		
-		# If the array is empty, all enemies are dead and the player wins
-		if active_enemies.is_empty():
-			_end_combat(true)
-			return
+		if target.hp <= 0:
+			_log_message("A fatal hit! The " + target.name + " goes down.")
+			active_enemies.erase(target)
+			
+			if active_enemies.is_empty():
+				_end_combat(true)
+				return
+		else:
+			_log_message("A direct hit! But the " + target.name + " absorbs the impact and keeps coming! (HP: " + str(target.hp) + ")")
 	else:
 		_log_message("Your shot misses, kicking up dust.")
-		# Firing forces the player out of full cover (level 2) down to partial cover (level 1)
 		if player_cover == 2:
 			player_cover = 1
 			_log_message("You leaned out of cover to shoot, exposing yourself.")
 			
 	_enemy_phase()
 
+# ------------------------------------------------------------------------
+# MELEE LOGIC
+# ------------------------------------------------------------------------
 func _on_btn_melee_pressed():
 	if not combat_active or active_enemies.is_empty(): return
 	
 	var target = _get_best_target()
 	
-	# Failsafe: Ensure the target is actually in melee or close range (distance 0 or 1)
 	if target.distance > 1:
 		_log_message("They are too far away to hit!")
 		return
 		
 	_log_message("You lunge forward, using your weapon as a blunt instrument against the " + target.name + "!")
 	
-	# Smashing someone with a firearm severely degrades its mechanical condition
 	GameState.modify_gun_condition(-15)
 	
-	# Base hit chance for melee is decent, but enemy cover makes it harder to land a clean blow
 	var hit_chance = 75 - (target.cover * 20)
 	
 	if randi() % 100 < hit_chance:
-		_log_message("A brutal strike! The " + target.name + " crumples to the dirt.")
-		active_enemies.erase(target)
+		# NEW: Reduce HP on melee strikes
+		target.hp -= 1
 		
-		if active_enemies.is_empty():
-			_end_combat(true)
-			return
+		if target.hp <= 0:
+			_log_message("A brutal strike! The " + target.name + " crumples to the dirt.")
+			active_enemies.erase(target)
+			
+			if active_enemies.is_empty():
+				_end_combat(true)
+				return
+		else:
+			_log_message("You crack the " + target.name + " hard, but they stay on their feet! (HP: " + str(target.hp) + ")")
 	else:
 		_log_message("Your swing goes wide, throwing you off balance.")
-		# Missing a heavy melee swing always breaks your cover completely
 		player_cover = 0 
 		
 	_enemy_phase()

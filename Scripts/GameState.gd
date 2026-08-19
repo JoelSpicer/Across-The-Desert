@@ -27,6 +27,8 @@ var available_biomes: Array[String] = ["dunes", "flats", "canyons", "ruins", "sc
 
 signal stats_changed 
 signal player_died # New signal to tell the UI to change scenes
+signal boss_encounter_triggered
+signal game_won
 
 func modify_water(amount: int):
 	water += amount
@@ -62,11 +64,22 @@ func modify_gun_condition(amount: int):
 	gun_condition = clamp(gun_condition, 0, 100)
 	stats_changed.emit()
 
+# ------------------------------------------------------------------------
+# MODIFY GAP DISTANCE
+# Adjusts the distance between you and the Man in Black.
+# ------------------------------------------------------------------------
 func modify_gap(amount: int):
 	gap_distance += amount
-	if gap_distance < 0: gap_distance = 0
-	stats_changed.emit()
-	_check_death_states()
+	
+	# If the gap drops to 0 or below, the player has caught up to the target.
+	# We cap it at 0 and trigger the final boss fight instead of a standard event.
+	if gap_distance <= 0:
+		gap_distance = 0
+		boss_encounter_triggered.emit()
+		
+	# Emit a generic signal to update the HUD (if you have one), 
+	# though your MainGame's clock tick usually handles this.
+	print("DEBUG: Gap is now ", gap_distance)
 
 func _check_death_states():
 	if is_dead:
