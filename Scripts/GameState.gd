@@ -1,7 +1,7 @@
 extends Node
 
 # The Six Chambers
-var gap_distance: int = 100 
+var gap_distance: int = 1 
 var max_grit: int = 100
 var current_grit: int = 100
 var water: int = 20
@@ -85,22 +85,25 @@ func modify_gap(amount: int):
 	print("DEBUG: Gap is now ", gap_distance)
 
 func _check_death_states():
+	# Failsafe: If the player is already flagged as dead, stop immediately.
+	# This prevents multiple death signals from firing at the exact same time.
 	if is_dead:
 		return
 		
-	if current_grit <= 0:
-		is_dead = true 
-		death_reason = "The desert claims you. Your grit has failed."
-		player_died.emit()
-	elif gap_distance >= 200:
-		is_dead = true 
-		death_reason = "The trail goes cold. He has escaped."
-		player_died.emit()
-	elif gap_distance <= 0:
+	# Check for dehydration
+	if water <= 0:
 		is_dead = true
-		death_reason = "You closed the distance. The Man in Black has nowhere left to run."
-		# We reuse the death signal here just to force the GameOver scene to load!
+		death_reason = "Your canteen ran dry. You withered under the relentless desert sun."
 		player_died.emit()
+		
+	# Check for exhaustion
+	elif current_grit <= 0:
+		is_dead = true
+		death_reason = "Your spirit finally broke. You collapsed into the dust, unable to take another step."
+		player_died.emit()
+		
+	# Note: We do not need to check for combat deaths here, because your 
+	# CombatPhase.gd script already sets 'is_dead' and emits the signal directly!
 
 func reset_run():
 	is_dead = false

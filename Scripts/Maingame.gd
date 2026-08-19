@@ -208,9 +208,18 @@ func _on_choice_2_pressed():
 	# Simply tell the Event Manager that choice 2 was picked
 	event_manager.process_choice(2)
 
+# ------------------------------------------------------------------------
+# DEATH STATE TRANSITION
+# Triggered automatically when GameState emits 'player_died'
+# ------------------------------------------------------------------------
 func _on_player_died():
-	# Pause the game slightly before cutting to black for dramatic effect
-	await get_tree().create_timer(1.0).timeout 
+	# Hide any active popups or UI elements so they don't visually glitch
+	# while the engine is tearing down the current scene
+	$MarginContainer.hide()
+	
+	# Pass control over to the Game Over scene.
+	# Because GameState.is_dead is now true, GameOver.gd will automatically
+	# realize this is a defeat rather than a victory.
 	get_tree().change_scene_to_file("res://Scene/GameOver.tscn")
 	
 func _on_make_camp_pressed():
@@ -246,7 +255,7 @@ func trigger_combat_encounter(enemy_name: String):
 # ------------------------------------------------------------------------
 func _on_boss_encounter_triggered():
 	# Hide the standard event UI so it doesn't overlap the combat screen
-	%EventUI.hide() 
+	#%EventUI.hide() 
 	
 	# Start the combat phase using the special ":boss" tag we are about to create.
 	# The Man in Black comes with a mechanical hound to make it a 2v1 fight!

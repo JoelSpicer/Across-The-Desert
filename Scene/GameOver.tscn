@@ -38,6 +38,7 @@ grow_vertical = 2
 unique_name_in_owner = true
 layout_mode = 2
 text = "labeltitle"
+horizontal_alignment = 1
 
 [node name="DeathMessage" type="Label" parent="VBoxContainer" unique_id=321246323]
 unique_name_in_owner = true

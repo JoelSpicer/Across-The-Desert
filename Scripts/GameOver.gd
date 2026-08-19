@@ -13,19 +13,20 @@ class_name GameOver
 # INITIALIZATION
 # ------------------------------------------------------------------------
 func _ready():
-	# DO NOT use hide() here, otherwise the scene loads completely invisible!
-	
-	# Determine if the player won or lost by checking the Gap Distance.
-	# If it's 0 or less, they survived the final encounter.
-	if GameState.gap_distance <= 0:
-		label_title.text = "VENGEANCE AT LAST"
-		label_reason.text = "The Man in Black lies dead in the sand. Your grueling journey across the wastes is finally over."
-	else:
-		# Otherwise, it's a standard death. Pull the exact death reason from the GameState.
+	# PRIORITY CHECK: Did the player actually die?
+	# This catches deaths that happen during the final boss fight, 
+	# preventing the game from assuming victory just because Gap is 0.
+	if GameState.is_dead:
+		# Standard defeat. Pull the exact death reason from the GameState.
 		label_title.text = "THE DESERT CLAIMS ANOTHER"
 		label_reason.text = GameState.death_reason
+	else:
+		# If the player is NOT dead, but we are on the Game Over screen,
+		# it means they successfully survived the final encounter.
+		label_title.text = "VENGEANCE AT LAST"
+		label_reason.text = "The Man in Black lies dead in the sand. Your grueling journey across the wastes is finally over."
 		
-	# Wire up the restart button
+	# Wire up the restart button so the player can try again
 	btn_restart.pressed.connect(_on_btn_restart_pressed)
 
 # ------------------------------------------------------------------------
