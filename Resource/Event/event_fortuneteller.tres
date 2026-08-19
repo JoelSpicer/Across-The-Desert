@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="NarrativeEvent" format=3 uid="uid://event3fortune"]
+
+[ext_resource type="Script" uid="uid://tebrdjqw5ke" path="res://Scripts/NarrativeEvent.gd" id="1_fortune"]
+
+[resource]
+script = ExtResource("1_fortune")
+event_weight = 7
+required_keywords = Array[String](["ruins"])
+forbidden_keywords = Array[String]([])
+event_text = "An eccentric drifter sits cross-legged on a rusted car hood. He offers to paint a blood-ward on your forehead to protect you from the desert's malice."
+choice_1_text = "Allow him to paint the ward."
+choice_2_text = "Refuse and walk away."
+choice_1_gives_affliction = "Lucky"
+choice_1_grit_cost = -4
+choice_2_text = "Refuse and walk away."
+metadata/_custom_type_script = "uid://tebrdjqw5ke"

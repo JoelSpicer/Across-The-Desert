@@ -74,3 +74,8 @@ text = "Advance"
 unique_name_in_owner = true
 layout_mode = 2
 text = "Retreat"
+
+[node name="BtnMelee" type="Button" parent="HBoxContainer" unique_id=320453407]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Pistol Whip"

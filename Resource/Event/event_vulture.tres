@@ -13,5 +13,4 @@ choice_1_food_cost = 1
 choice_1_gun_condition_cost = 30
 choice_2_gun_condition_cost = 30
 choice_2_grit_cost = -15
-choice_2_gives_affliction = "Exhausted"
 metadata/_custom_type_script = "uid://tebrdjqw5ke"

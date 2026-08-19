@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="NarrativeEvent" format=3 uid="uid://event1spring"]
+
+[ext_resource type="Script" uid="uid://tebrdjqw5ke" path="res://Scripts/NarrativeEvent.gd" id="1_spring"]
+
+[resource]
+script = ExtResource("1_spring")
+event_weight = 8
+required_keywords = Array[String](["scrubland"])
+forbidden_keywords = Array[String]([])
+event_text = "You discover a pristine, hidden spring surrounded by vibrant desert blooms. The water is remarkably clear, a stark contrast to the unforgiving heat."
+choice_1_text = "Scrub your gear and rest."
+choice_2_text = "Quickly fill your canteen and run."
+choice_1_gives_affliction = "Recovering"
+choice_1_cures_affliction = "Dirty"
+choice_1_gap_penalty = 15
+choice_2_water_cost = 5
+choice_2_gives_affliction = "Haste"
+metadata/_custom_type_script = "uid://tebrdjqw5ke"

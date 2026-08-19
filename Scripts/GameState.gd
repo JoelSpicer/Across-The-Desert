@@ -146,14 +146,39 @@ func remove_affliction(affliction: String):
 
 # --- NEW: THE STATUS SWITCHBOARD ---
 
+# ------------------------------------------------------------------------
+# AFFLICTION PROCESSING
+# Called by EventManager every time the narrative clock advances
+# ------------------------------------------------------------------------
 func process_afflictions():
+	# Loop through every active status effect currently on the player
 	for affliction in current_afflictions:
-		match affliction:
-			"bleeding":
-				modify_grit(-10)
-			# To add future statuses, just add a new match case!
-			# "exhausted":
-			#     modify_gap(5)
+		# Convert to lowercase so capitalization in the Inspector doesn't break the logic
+		match affliction.to_lower():
+			"bleeding", "injured":
+				modify_grit(-1)
+			"recovering":
+				modify_grit(1)
+			"slow":
+				# Gap goes UP (The Man in Black gets further away)
+				modify_gap(2) 
+			"haste":
+				# Gap goes DOWN (You gain ground on him)
+				modify_gap(-2) 
+			"dirty":
+				# Gun degrades quickly while filled with sand
+				modify_gun_condition(-2)
+			"clumsy":
+				# randi() % 2 generates either a 0 or a 1
+				if randi() % 2 == 0:
+					modify_water(-2) # Tripped and spilled water
+				else:
+					modify_ammo(-1)  # Dropped a bullet in the sand
+			"lucky":
+				if randi() % 2 == 0:
+					modify_water(2)  # Found a clean cactus
+				else:
+					modify_ammo(1)   # Found a discarded shell
 
 # --- TAG GENERATOR ---
 
