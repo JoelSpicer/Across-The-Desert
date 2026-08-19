@@ -180,6 +180,21 @@ func process_afflictions():
 				else:
 					modify_ammo(1)   # Found a discarded shell
 
+# ------------------------------------------------------------------------
+# NEW: CLEAR ALL AFFLICTIONS
+# Wipes the slate clean, removing both positive and negative status effects
+# ------------------------------------------------------------------------
+func clear_all_afflictions():
+	# If the array is already empty, we don't need to do anything
+	if current_afflictions.is_empty():
+		return
+		
+	# Empty the array completely
+	current_afflictions.clear()
+	
+	# Emit a generic signal if you have one set up for UI updates, 
+	# though your update_hud() will naturally catch this change on the next tick!
+	print("DEBUG: All afflictions cleared.")
 # --- TAG GENERATOR ---
 
 # --- NEW FUNCTION ---

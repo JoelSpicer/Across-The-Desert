@@ -2,27 +2,8 @@
 
 [ext_resource type="Script" uid="uid://bl2mj2viyx60t" path="res://Scripts/Maingame.gd" id="1_qop27"]
 [ext_resource type="Script" uid="uid://fsu7r8t5k7wf" path="res://Scripts/EventManager.gd" id="2_cp47j"]
-[ext_resource type="Script" uid="uid://tebrdjqw5ke" path="res://Scripts/NarrativeEvent.gd" id="3_noc35"]
-[ext_resource type="Resource" uid="uid://c0xt24qalu5pd" path="res://Resource/Event/event_flats.tres" id="4_tsug7"]
-[ext_resource type="Resource" uid="uid://bk7ve7l4gpg2l" path="res://Resource/Event/event_lockbox.tres" id="5_kwaul"]
-[ext_resource type="Resource" uid="uid://daiuf8mceswdq" path="res://Resource/Event/event_oasis.tres" id="6_cr6pf"]
-[ext_resource type="Resource" uid="uid://cd2el4u81xrgf" path="res://Resource/Event/event_bird.tres" id="7_tsug7"]
-[ext_resource type="Resource" uid="uid://c2d3e4f5g6h7" path="res://Resource/Event/event_bunker.tres" id="8_h2stg"]
-[ext_resource type="Resource" uid="uid://b1c2d3e4f5g6" path="res://Resource/Event/event_dogs.tres" id="9_67h40"]
-[ext_resource type="Resource" uid="uid://d3e4f5g6h7i8" path="res://Resource/Event/event_sandstorm.tres" id="10_6kscw"]
-[ext_resource type="Resource" uid="uid://f5g6h7i8kak0" path="res://Resource/Event/event_vulture.tres" id="11_gmmav"]
-[ext_resource type="Resource" uid="uid://e4f5g6h7i8ka" path="res://Resource/Event/event_wire.tres" id="12_kuqqk"]
-[ext_resource type="Resource" uid="uid://g6h7i8kak0l1" path="res://Resource/Event/event_map.tres" id="13_b1kjx"]
-[ext_resource type="Resource" uid="uid://bjhr7ocb582uh" path="res://Resource/Event/event_crossroads_canyon_flats.tres" id="14_klqy8"]
-[ext_resource type="Resource" uid="uid://drnculbb5cv8w" path="res://Resource/Event/event_crossroads_canyons_ruins.tres" id="15_3u5f0"]
-[ext_resource type="Resource" uid="uid://cv8ywpvc4deai" path="res://Resource/Event/event_crossroads_dunes_flats.tres" id="16_fdwl7"]
-[ext_resource type="Resource" uid="uid://oig0oqv3p5k0" path="res://Resource/Event/event_crossroads_ruins_scrubland.tres" id="17_tix3s"]
 [ext_resource type="PackedScene" uid="uid://cb20sqytd55vh" path="res://Scene/CombatPhase.tscn" id="18_3u5f0"]
-[ext_resource type="Resource" uid="uid://dxmv2y37ixoeb" path="res://Resource/Event/event_combat_scavenger.tres" id="18_fdwl7"]
-[ext_resource type="Resource" uid="uid://0jk1oipdelev" path="res://Resource/Event/event_settlement_scraptown.tres" id="19_e641i"]
 [ext_resource type="PackedScene" uid="uid://qwxj1tnvrd36" path="res://Scene/SettlementPhase.tscn" id="19_tix3s"]
-[ext_resource type="Resource" uid="uid://cw7c76eg4x4hr" path="res://Resource/Event/event_settlement_hermitsshack.tres" id="20_5mct5"]
-[ext_resource type="Resource" uid="uid://settle3oasis" path="res://Resource/Event/event_settlement_oasistraders.tres" id="21_klgyx"]
 
 [node name="MainGame" type="Control" unique_id=681661840]
 layout_mode = 3
@@ -159,7 +140,6 @@ layout_mode = 2
 
 [node name="EventManager" type="Node" parent="." unique_id=1248262272]
 script = ExtResource("2_cp47j")
-event_pool = Array[ExtResource("3_noc35")]([ExtResource("4_tsug7"), ExtResource("5_kwaul"), ExtResource("6_cr6pf"), ExtResource("7_tsug7"), ExtResource("8_h2stg"), ExtResource("9_67h40"), ExtResource("10_6kscw"), ExtResource("11_gmmav"), ExtResource("12_kuqqk"), ExtResource("13_b1kjx"), ExtResource("14_klqy8"), ExtResource("15_3u5f0"), ExtResource("16_fdwl7"), ExtResource("17_tix3s"), ExtResource("18_fdwl7"), ExtResource("19_e641i"), ExtResource("20_5mct5"), ExtResource("21_klgyx")])
 
 [node name="SettlementPhase" parent="." unique_id=233874774 instance=ExtResource("19_tix3s")]
 unique_name_in_owner = true

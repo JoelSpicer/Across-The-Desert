@@ -23,7 +23,7 @@ signal left_settlement
 var settlement_db = {
 	"Scrap Town": {
 		"desc": "A rare safe haven. Your ammo is as good as gold here.",
-		"water_price": 2, "food_price": 3, "doc_price": 5,
+		"water_price": 2, "food_price": 3, "doc_price": 3,
 		"has_water": true, "has_food": true, "has_doc": true,
 		"special_item": "", "special_price": 0
 	},
@@ -35,7 +35,7 @@ var settlement_db = {
 	},
 	"Hermit's Shack": {
 		"desc": "A crazy old doctor lives here in solitude. He has no food or water to spare.",
-		"water_price": 0, "food_price": 0, "doc_price": 3, # Doctor is cheaper here!
+		"water_price": 0, "food_price": 0, "doc_price": 1, # Doctor is cheaper here!
 		"has_water": false, "has_food": false, "has_doc": true,
 		"special_item": "Map", "special_price": 4 # Sells a unique item
 	}
@@ -124,17 +124,26 @@ func _on_btn_buy_food_pressed():
 	else:
 		label_feedback.text = "You don't have enough Ammo to trade for food."
 
+# ------------------------------------------------------------------------
+# DOCTOR LOGIC (Updated to clear all conditions)
+# ------------------------------------------------------------------------
 func _on_btn_doctor_pressed():
+	# If the player has absolutely no statuses, the doctor refuses service
 	if GameState.current_afflictions.is_empty():
 		label_feedback.text = "The doctor looks you over. 'You're fine, save your bullets.'"
 		return
 		
 	var price = current_data["doc_price"]
+	
+	# Check if the player can afford the treatment
 	if GameState.ammo >= price:
 		GameState.modify_ammo(-price)
-		var cured = GameState.current_afflictions[0]
-		GameState.remove_affliction(cured)
-		label_feedback.text = "Traded " + str(price) + " Ammo. The doctor patched your " + cured + "."
+		
+		# Wipe every single buff and debuff from the player
+		GameState.clear_all_afflictions()
+		
+		# Provide narrative feedback that the slate has been wiped clean
+		label_feedback.text = "Traded " + str(price) + " Ammo. The doctor patched you up and purged your system. You feel completely reset."
 	else:
 		label_feedback.text = "You need " + str(price) + " Ammo for medical attention."
 

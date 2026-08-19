@@ -29,6 +29,8 @@ func _on_sleep_pressed():
 		current_hours -= 4
 		hours_spent += 4
 		GameState.modify_grit(40) # Sleeping heals 40 Grit
+		# Wipe all positive and negative conditions when sleeping
+		GameState.clear_all_afflictions()
 		label_log.text = "You sleep fitfully. (+40 Grit)"
 		update_ui()
 	else:

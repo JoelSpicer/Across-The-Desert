@@ -1,20 +1,65 @@
 extends Node
 
-@export var event_pool: Array[NarrativeEvent] = []
+var event_pool: Array[NarrativeEvent] = []
 var recent_events: Array[NarrativeEvent] = []
 # How many events to remember. 
 # 2 means an event can't repeat until at least 2 other things happen.
 var max_history_size: int = 5
 var current_event: NarrativeEvent
 
+var event_directory_path: String = "res://Resource/Event/"
 # Reference to the main UI to pass the event data
 @onready var main_game_ui = get_parent()
 
 func _ready():
 	# Make sure you have added your .tres files to the event_pool array in the Inspector!
+	_load_all_events()
 	if event_pool.is_empty():
 		push_error("Event pool is empty! Add NarrativeEvent resources in the inspector.")
 		return
+
+# ------------------------------------------------------------------------
+# AUTOMATIC RESOURCE LOADING
+# Scans the target folder and loads every NarrativeEvent it finds
+# ------------------------------------------------------------------------
+func _load_all_events():
+	# Open the directory using Godot's file system access
+	var dir = DirAccess.open(event_directory_path)
+	
+	if dir:
+		# Begin checking the files inside the folder
+		dir.list_dir_begin()
+		var file_name = dir.get_next()
+		
+		# Loop through until we run out of files
+		while file_name != "":
+			# Ignore sub-folders and only look at files
+			if not dir.current_is_dir():
+				
+				# EXPORT FIX: When you export a Godot game, .tres files are often 
+				# renamed to .tres.remap. This cleans the string so it works in the final build!
+				file_name = file_name.replace(".remap", "")
+				
+				# Ensure we are only grabbing our Resource files
+				if file_name.ends_with(".tres"):
+					# Construct the full path (e.g., "res://Resource/Event/event_bunker.tres")
+					var resource_path = event_directory_path + file_name
+					
+					# Load the file and cast it as our custom NarrativeEvent class
+					var loaded_event = load(resource_path) as NarrativeEvent
+					
+					# If the load was successful, add it to our active deck
+					if loaded_event != null:
+						event_pool.append(loaded_event)
+						
+			# Move to the next file in the folder
+			file_name = dir.get_next()
+			
+		# Close the directory safely
+		dir.list_dir_end()
+		print("DEBUG: Successfully loaded ", event_pool.size(), " events from the folder.")
+	else:
+		print("ERROR: Could not access the event directory at ", event_directory_path)
 
 func trigger_random_event():
 	var valid_events: Array[NarrativeEvent] = []

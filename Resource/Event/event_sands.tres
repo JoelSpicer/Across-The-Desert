@@ -4,14 +4,12 @@
 
 [resource]
 script = ExtResource("1_sands")
-event_weight = 10
 required_keywords = Array[String](["dunes"])
-forbidden_keywords = Array[String]([])
 event_text = "A violent gust of wind suddenly whips the dunes into a blinding wall of abrasive sand. Visibility drops to zero in a matter of seconds."
 choice_1_text = "Push blindly through the storm."
 choice_2_text = "Hunker down and cover your equipment."
-choice_1_gives_affliction = "Clumsy"
 choice_1_gap_penalty = -10
-choice_2_gives_affliction = "Slow"
+choice_1_gives_affliction = "Clumsy"
 choice_2_grit_cost = -2
+choice_2_gives_affliction = "Slow"
 metadata/_custom_type_script = "uid://tebrdjqw5ke"
