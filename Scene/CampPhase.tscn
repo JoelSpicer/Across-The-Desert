@@ -57,6 +57,7 @@ layout_mode = 2
 text = "Maintain Gun (2 Hrs)"
 
 [node name="BtnForage" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=1953506301]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Forage (2 Hrs)"
 
