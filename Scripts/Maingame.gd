@@ -19,6 +19,8 @@ extends Control
 @onready var combat_phase = %CombatPhase
 @onready var event_manager = $EventManager # Reference the new node
 
+@onready var ascii_background = $BackgroundLayer
+
 # --- NEW: STAT TRACKING VARIABLES ---
 var prev_water: int = 0
 var prev_grit: int = 0
@@ -199,6 +201,7 @@ func load_event(event_resource: NarrativeEvent):
 	main_text.text = event_resource.event_text
 	btn_choice_1.text = event_resource.choice_1_text
 	btn_choice_2.text = event_resource.choice_2_text
+	ascii_background.update_background(GameState.current_biome)
 
 func _on_choice_1_pressed():
 	# Simply tell the Event Manager that choice 1 was picked
@@ -259,18 +262,23 @@ func _on_boss_encounter_triggered():
 	
 	# Start the combat phase using the special ":boss" tag we are about to create.
 	# The Man in Black comes with a mechanical hound to make it a 2v1 fight!
-	combat_phase.start_combat("The Man in Black:boss, Clockwork Hound:melee")
+	combat_phase.start_combat("Man in Black:boss, Clockwork Hound:melee")
 
-# Called automatically when the player wins the fight
+# ------------------------------------------------------------------------
+# COMBAT RESOLUTION
+# Triggered automatically when the CombatPhase emits 'combat_won'
+# ------------------------------------------------------------------------
 func _on_combat_won():
-	# Check if the player has closed the distance entirely. 
-	# If Gap is 0, the fight they just survived was the Final Confrontation!
+	# Check if this was the Final Confrontation by looking at the Gap
 	if GameState.gap_distance <= 0:
-		# Trigger the victory state
-		GameState.game_won.emit()
+		# We beat the boss! 
+		# call_deferred queues the scene change safely at the end of the frame,
+		# preventing Godot from silently crashing the transition.
+		get_tree().call_deferred("change_scene_to_file", "res://Scene/GameOver.tscn")
 	else:
-	# Resume the normal game loop now that the threat is dead
-		GameState.advance_time()
+		# It was just a standard desert ambush. 
+		# Resume the journey by drawing the next random event.
+		# (Ensure this calls your actual event-drawing function!)
 		event_manager.trigger_random_event()
 
 # --- NEW SETTLEMENT FLOW FUNCTIONS ---

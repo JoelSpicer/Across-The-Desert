@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://bl2mj2viyx60t" path="res://Scripts/Maingame.gd" id="1_qop27"]
 [ext_resource type="Script" uid="uid://fsu7r8t5k7wf" path="res://Scripts/EventManager.gd" id="2_cp47j"]
+[ext_resource type="Script" uid="uid://b6e6ww0n0phl8" path="res://Scripts/AsciiBackground.gd" id="2_noc35"]
+[ext_resource type="FontFile" uid="uid://crqkpnnswxpoy" path="res://Resource/Art/Fonts/CourierPrime-Regular.ttf" id="3_tsug7"]
 [ext_resource type="PackedScene" uid="uid://cb20sqytd55vh" path="res://Scene/CombatPhase.tscn" id="18_3u5f0"]
 [ext_resource type="PackedScene" uid="uid://qwxj1tnvrd36" path="res://Scene/SettlementPhase.tscn" id="19_tix3s"]
 
@@ -14,7 +16,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_qop27")
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=116205780]
+[node name="BackgroundLayer" type="ColorRect" parent="." unique_id=116205780]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -22,6 +24,22 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
+script = ExtResource("2_noc35")
+
+[node name="AsciiDisplay" type="RichTextLabel" parent="BackgroundLayer" unique_id=1591160278]
+self_modulate = Color(1, 1, 1, 0.28235295)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("3_tsug7")
+bbcode_enabled = true
+fit_content = true
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=130289015]
 layout_mode = 1
@@ -72,7 +90,7 @@ text = "AmmoLabel"
 [node name="EventDisplayArea" type="ColorRect" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=584878760]
 layout_mode = 2
 size_flags_vertical = 3
-color = Color(0, 0, 0, 1)
+color = Color(0, 0, 0, 0)
 
 [node name="MainText" type="RichTextLabel" parent="MarginContainer/HBoxContainer/VBoxContainer/EventDisplayArea" unique_id=662743340]
 layout_mode = 1

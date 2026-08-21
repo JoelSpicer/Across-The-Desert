@@ -118,7 +118,7 @@ func _on_btn_shoot_pressed():
 	
 	var hit_chance = 80 - (target.distance * 15) - (target.cover * 30)
 	if GameState.gun_condition < 50: hit_chance -= 20
-		
+	#hit_chance = 100
 	if randi() % 100 < hit_chance:
 		# NEW: Reduce HP instead of instantly killing
 		target.hp -= 1
