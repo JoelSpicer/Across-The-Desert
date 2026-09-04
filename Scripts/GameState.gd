@@ -1,7 +1,7 @@
 extends Node
 
 # The Six Chambers
-var gap_distance: int = 100
+var gap_distance: int = 1
 var max_grit: int = 100
 var current_grit: int = 100
 var water: int = 20

@@ -40,13 +40,13 @@ var biome_loot_tables = {
 	]
 }
 
-@onready var label_hours = $MarginContainer/VBoxContainer/HoursLabel
-@onready var label_log = $MarginContainer/VBoxContainer/LogLabel
+@onready var label_hours = $MarginContainer/PanelContainer/VBoxContainer/HoursLabel
+@onready var label_log = $MarginContainer/PanelContainer/VBoxContainer/LogLabel
 
-@onready var btn_sleep = $MarginContainer/VBoxContainer/HBoxContainer/BtnSleep
-@onready var btn_maintain = $MarginContainer/VBoxContainer/HBoxContainer/BtnMaintain
-@onready var btn_forage = $MarginContainer/VBoxContainer/HBoxContainer/BtnForage
-@onready var btn_break_camp = $MarginContainer/VBoxContainer/BtnBreakCamp
+@onready var btn_sleep = %BtnSleep
+@onready var btn_maintain = %BtnMaintain
+@onready var btn_forage = %BtnForage
+@onready var btn_break_camp = %BtnBreakCamp
 
 func _ready():
 	# Connect the buttons

@@ -2,6 +2,37 @@
 
 [ext_resource type="Script" uid="uid://dpd5trnb8y733" path="res://Scripts/CombatPhase.gd" id="1_7rmge"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_retro"]
+content_margin_left = 15.0
+content_margin_top = 15.0
+content_margin_right = 15.0
+content_margin_bottom = 15.0
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_BtnNormal"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_BtnHover"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+anti_aliasing = false
+
 [node name="CombatPhase" type="Control" unique_id=1819485237]
 layout_mode = 3
 anchors_preset = 15
@@ -18,7 +49,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 0.78431374)
+color = Color(0, 0, 0, 1)
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=2056274479]
 custom_minimum_size = Vector2(800, 400)
@@ -31,6 +62,7 @@ offset_top = 30.0
 offset_right = 400.0
 offset_bottom = 430.0
 grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_retro")
 
 [node name="CombatLogLabel" type="RichTextLabel" parent="PanelContainer" unique_id=413954039]
 unique_name_in_owner = true
@@ -47,35 +79,81 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -20.0
+offset_left = -200.0
 offset_top = -90.0
-offset_right = 20.0
+offset_right = 200.0
 offset_bottom = -50.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/separation = 20
+alignment = 1
 
 [node name="BtnShoot" type="Button" parent="HBoxContainer" unique_id=198287265]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_styles/focus = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/hover = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/normal = SubResource("StyleBoxFlat_BtnNormal")
 text = "Shoot"
 
 [node name="BtnCover" type="Button" parent="HBoxContainer" unique_id=2007044426]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_styles/focus = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/hover = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/normal = SubResource("StyleBoxFlat_BtnNormal")
 text = "Find Cover"
 
 [node name="BtnAdvance" type="Button" parent="HBoxContainer" unique_id=489744126]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_styles/focus = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/hover = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/normal = SubResource("StyleBoxFlat_BtnNormal")
 text = "Advance"
 
 [node name="BtnRetreat" type="Button" parent="HBoxContainer" unique_id=1130365024]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_styles/focus = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/hover = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/normal = SubResource("StyleBoxFlat_BtnNormal")
 text = "Retreat"
 
 [node name="BtnMelee" type="Button" parent="HBoxContainer" unique_id=320453407]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_styles/focus = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/hover = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/normal = SubResource("StyleBoxFlat_BtnNormal")
 text = "Pistol Whip"

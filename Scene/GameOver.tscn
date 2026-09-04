@@ -2,6 +2,37 @@
 
 [ext_resource type="Script" uid="uid://dp0b8a747rddp" path="res://Scripts/GameOver.gd" id="1_3cf28"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_retro"]
+content_margin_left = 15.0
+content_margin_top = 15.0
+content_margin_right = 15.0
+content_margin_bottom = 15.0
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_BtnNormal"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_BtnHover"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+anti_aliasing = false
+
 [node name="GameOver" type="Control" unique_id=1885378095]
 layout_mode = 3
 anchors_preset = 15
@@ -20,34 +51,49 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=576022035]
+[node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+offset_left = -250.0
+offset_top = -100.0
+offset_right = 250.0
+offset_bottom = 100.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_retro")
 
-[node name="LabelTitle" type="Label" parent="VBoxContainer" unique_id=48473349]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=576022035]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="LabelTitle" type="Label" parent="PanelContainer/VBoxContainer" unique_id=48473349]
 unique_name_in_owner = true
 layout_mode = 2
 text = "labeltitle"
 horizontal_alignment = 1
 
-[node name="DeathMessage" type="Label" parent="VBoxContainer" unique_id=321246323]
+[node name="DeathMessage" type="Label" parent="PanelContainer/VBoxContainer" unique_id=321246323]
 unique_name_in_owner = true
 layout_mode = 2
 text = "deathmessage"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="RestartButton" type="Button" parent="VBoxContainer" unique_id=1039843180]
+[node name="RestartButton" type="Button" parent="PanelContainer/VBoxContainer" unique_id=1039843180]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_styles/focus = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/hover = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/normal = SubResource("StyleBoxFlat_BtnNormal")
 text = "The Wheel Turns (Restart)"

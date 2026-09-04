@@ -2,6 +2,37 @@
 
 [ext_resource type="Script" uid="uid://b34bkuexp0cap" path="res://Scripts/SettlementPhase.gd" id="1_settle"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_retro"]
+content_margin_left = 15.0
+content_margin_top = 15.0
+content_margin_right = 15.0
+content_margin_bottom = 15.0
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_BtnNormal"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_BtnHover"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+anti_aliasing = false
+
 [node name="SettlementPhase" type="Control" unique_id=531117985]
 layout_mode = 3
 anchors_preset = 15
@@ -18,7 +49,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 0.78431374)
+color = Color(0, 0, 0, 1)
 
 [node name="TextPanel" type="PanelContainer" parent="." unique_id=757811964]
 custom_minimum_size = Vector2(800, 200)
@@ -31,6 +62,7 @@ offset_top = 30.0
 offset_right = 400.0
 offset_bottom = 230.0
 grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_retro")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TextPanel" unique_id=1968578681]
 layout_mode = 2
@@ -70,24 +102,69 @@ theme_override_constants/separation = 15
 [node name="BtnBuyWater" type="Button" parent="ButtonVBox" unique_id=1955075103]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_styles/focus = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/hover = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/normal = SubResource("StyleBoxFlat_BtnNormal")
 text = "Buy Water (2 Ammo)"
 
 [node name="BtnBuyFood" type="Button" parent="ButtonVBox" unique_id=1460833658]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_styles/focus = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/hover = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/normal = SubResource("StyleBoxFlat_BtnNormal")
 text = "Buy Food (3 Ammo)"
 
 [node name="BtnDoctor" type="Button" parent="ButtonVBox" unique_id=1891008141]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_styles/focus = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/hover = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/normal = SubResource("StyleBoxFlat_BtnNormal")
 text = "See Doctor (5 Ammo)"
 
 [node name="BtnSpecial" type="Button" parent="ButtonVBox" unique_id=308120958]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_styles/focus = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/hover = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/normal = SubResource("StyleBoxFlat_BtnNormal")
 text = "BtnSpecial"
 
 [node name="BtnLeave" type="Button" parent="ButtonVBox" unique_id=1635653656]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_styles/focus = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/hover = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/normal = SubResource("StyleBoxFlat_BtnNormal")
 text = "Leave Settlement"

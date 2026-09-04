@@ -2,6 +2,37 @@
 
 [ext_resource type="Script" uid="uid://cxdlb64o2ep1d" path="res://Scripts/CampPhase.gd" id="1_hkh6m"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_retro"]
+content_margin_left = 15.0
+content_margin_top = 15.0
+content_margin_right = 15.0
+content_margin_bottom = 15.0
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_BtnNormal"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_BtnHover"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+anti_aliasing = false
+
 [node name="CampPhase" type="ColorRect" unique_id=665874291]
 anchors_preset = 15
 anchor_right = 1.0
@@ -18,49 +49,93 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=495850979]
-self_modulate = Color(0, 0, 0, 1)
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer" unique_id=572694421]
 layout_mode = 2
-size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_retro")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer" unique_id=495850979]
+layout_mode = 2
 theme_override_constants/separation = 30
+alignment = 1
 
-[node name="TitleLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=977828883]
+[node name="TitleLabel" type="Label" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=977828883]
 layout_mode = 2
+theme_override_font_sizes/font_size = 24
 text = "Camp Pitch"
 horizontal_alignment = 1
 
-[node name="HoursLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1006390514]
+[node name="HoursLabel" type="Label" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=1006390514]
 layout_mode = 2
 text = "Time Remaining: 8 Hours"
 horizontal_alignment = 1
 
-[node name="LogLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1279752855]
+[node name="LogLabel" type="Label" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=1279752855]
 layout_mode = 2
 text = "What will you do?"
 horizontal_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=597824538]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=597824538]
 layout_mode = 2
+theme_override_constants/separation = 20
 alignment = 1
 
-[node name="BtnSleep" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=1974857452]
-layout_mode = 2
-text = "Sleep (4 Hrs)"
-
-[node name="BtnMaintain" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=661498537]
-layout_mode = 2
-text = "Maintain Gun (2 Hrs)"
-
-[node name="BtnForage" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=1953506301]
+[node name="BtnSleep" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer/HBoxContainer" unique_id=1974857452]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxFlat_BtnNormal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/hover = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_BtnHover")
+text = "Sleep (4 Hrs)"
+
+[node name="BtnMaintain" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer/HBoxContainer" unique_id=661498537]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxFlat_BtnNormal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/hover = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_BtnHover")
+text = "Maintain Gun (2 Hrs)"
+
+[node name="BtnForage" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer/HBoxContainer" unique_id=1953506301]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxFlat_BtnNormal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/hover = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_BtnHover")
 text = "Forage (2 Hrs)"
 
-[node name="BtnBreakCamp" type="Button" parent="MarginContainer/VBoxContainer" unique_id=1757569489]
+[node name="BtnBreakCamp" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer/HBoxContainer" unique_id=1757569489]
+unique_name_in_owner = true
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxFlat_BtnNormal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/hover = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_BtnHover")
 text = "Break Camp"
