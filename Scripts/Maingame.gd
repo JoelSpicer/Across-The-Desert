@@ -90,28 +90,62 @@ func _ready():
 # ------------------------------------------------------------------------
 func update_hud():
 	# 1. TIME & LOCATION DISPLAY
-	# Determine if it is Day or Night to show current survival penalties
 	var time_string = "DAY (2x Water Loss)"
 	if not GameState.is_day:
 		time_string = "NIGHT (2x Grit Loss)"
 		
-	# Combine Biome and Time for a clean location header
-	label_time.text = " " + GameState.current_biome.to_upper() + " - " + time_string + " | "
+	label_time.text = " | " + GameState.current_biome.to_upper() + " - " + time_string + " | "
 	
 	# 2. CORE STAT LABELS
-	# Update numerical HUD values directly from the GameState singleton
 	label_water.text = "Water: " + str(GameState.water) + " | "
 	label_grit.text = "Grit: " + str(GameState.current_grit) + " | "
 	label_gap.text = "Gap: " + str(GameState.gap_distance) + " | "
 	label_gun.text = "Gun: " + str(GameState.gun_condition) + "%" + " | "
-	label_ammo.text = "Ammo: " + str(GameState.ammo) + " "
+	label_ammo.text = "Ammo: " + str(GameState.ammo) + " | "
 	
-	# 3. INVENTORY & CAMP DISPLAY
+	# --------------------------------------------------------------------
+	# 3. DYNAMIC INVENTORY BUTTON GENERATION
+	# --------------------------------------------------------------------
+	# Clear out any existing labels or buttons from the previous UI state
+	for child in label_inventory_list.get_children():
+		child.queue_free()
+		
 	if GameState.inventory.is_empty():
-		label_inventory_list.text = "[Empty]"
+		# If empty, just spawn a standard label to indicate nothing is there
+		var empty_label = Label.new()
+		empty_label.text = "[Empty]"
+		empty_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		label_inventory_list.add_child(empty_label)
 	else:
-		# "\n" places a line break between each item in the array for clean sidebar listing
-		label_inventory_list.text = "\n".join(GameState.inventory)
+		# If we have items, iterate through the array and build a button for each
+		for item_id in GameState.inventory:
+			var btn = Button.new()
+			
+			# Fetch the friendly display name (e.g., translates "Oil" to "Tin of Gun Oil")
+			var display_name = item_id
+			if GameState.ITEM_DATABASE.has(item_id):
+				display_name = GameState.ITEM_DATABASE[item_id]
+				
+			btn.text = "Use " + display_name
+			
+			# Programmatically copy the 1-bit retro styling from your choice buttons
+			btn.add_theme_stylebox_override("normal", btn_choice_1.get_theme_stylebox("normal"))
+			btn.add_theme_stylebox_override("hover", btn_choice_1.get_theme_stylebox("hover"))
+			btn.add_theme_stylebox_override("pressed", btn_choice_1.get_theme_stylebox("pressed"))
+			btn.add_theme_stylebox_override("focus", btn_choice_1.get_theme_stylebox("focus"))
+			
+			# Programmatically copy the hover/invert text colors
+			btn.add_theme_color_override("font_color", Color.WHITE)
+			btn.add_theme_color_override("font_hover_color", Color.BLACK)
+			btn.add_theme_color_override("font_pressed_color", Color.BLACK)
+			btn.add_theme_color_override("font_focus_color", Color.BLACK)
+			btn.add_theme_font_size_override("font_size", 12)
+			
+			# Bind the button press directly to the global item consumption logic!
+			btn.pressed.connect(GameState.consume_item.bind(item_id))
+			
+			# Attach the fully built button to the UI tree
+			label_inventory_list.add_child(btn)
 	
 	# Enable or disable the Camp button based on available food supplies
 	if GameState.food > 0:
@@ -126,34 +160,27 @@ func update_hud():
 	if current_tags.is_empty():
 		label_debug_keywords.text = "DEBUG TAGS:\n[None]"
 	else:
-		# Join active tags with commas for readable debugging output
 		label_debug_keywords.text = "DEBUG TAGS:\n" + ", ".join(current_tags)
 		
-	# Update the Afflictions status container
 	if GameState.current_afflictions.is_empty():
 		label_afflictions.text = "Status: Healthy"
 	else:
 		label_afflictions.text = "AFFLICTIONS:\n" + "\n".join(GameState.current_afflictions).capitalize()
 	
 	# 5. NARRATIVE CHOICE BUTTONS & ITEM LOCKS
-	# Update button text and check for required inventory items
 	if event_manager.current_event != null:
 		var current_event = event_manager.current_event
 		
-		# --- Choice 1 Setup ---
 		btn_choice_1.text = current_event.choice_1_text
-		# If a required item is specified and missing from inventory, lock the button
 		if current_event.choice_1_required_item != "" and not GameState.inventory.has(current_event.choice_1_required_item):
 			btn_choice_1.disabled = true
 			btn_choice_1.text += "\n(Requires: " + current_event.choice_1_required_item + ")"
 		else:
 			btn_choice_1.disabled = false
 
-		# --- Choice 2 Setup ---
 		if current_event.choice_2_text != "":
 			btn_choice_2.show()
 			btn_choice_2.text = current_event.choice_2_text
-			# If a required item is specified and missing from inventory, lock the button
 			if current_event.choice_2_required_item != "" and not GameState.inventory.has(current_event.choice_2_required_item):
 				btn_choice_2.disabled = true
 				btn_choice_2.text += "\n(Requires: " + current_event.choice_2_required_item + ")"
@@ -163,7 +190,6 @@ func update_hud():
 			btn_choice_2.hide()
 
 	# 6. ANIMATE STAT CHANGES
-	# Trigger flash/tween animations when current values diverge from previous snapshots
 	if GameState.water != prev_water:
 		animate_label(label_water, GameState.water > prev_water)
 		prev_water = GameState.water

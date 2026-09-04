@@ -251,3 +251,59 @@ func get_current_keywords() -> Array[String]:
 		keywords.append(item.to_lower())
 		
 	return keywords
+
+# ------------------------------------------------------------------------
+# CONSUMABLE DATABASE
+# A scalable dictionary mapping item IDs to their display names.
+# To add new items to the game, just define them here and add a case below.
+# ------------------------------------------------------------------------
+const ITEM_DATABASE = {
+	"Bandage": "Sterile Bandage",
+	"Oil": "Tin of Gun Oil",
+	"Canteen": "Canteen Ration",
+	"Scrap": "Scrap Metal",
+	"Map": "Scavenger's Map",
+	"Stamina": "Stamina Ampoule",
+	"Creatine": "Creatine Powder",
+	"SnakeOil": "Snake Oil",
+	"Salts": "Smelling Salts"
+}
+
+# ------------------------------------------------------------------------
+# INVENTORY CONSUMPTION LOGIC
+# Triggered dynamically by the buttons generated in the Main Game HUD
+# ------------------------------------------------------------------------
+func consume_item(item_id: String):
+	# 1. Verify the item actually exists in the player's inventory
+	if not inventory.has(item_id):
+		return
+		
+	# 2. Remove the item from the array (this only removes the first instance found)
+	inventory.erase(item_id)
+	
+	# 3. Apply the specific mechanical effect based on the item's ID
+	match item_id:
+		"Bandage":
+			# Bandages cure physical ailments and provide a slight comfort bonus
+			current_afflictions.erase("bleeding")
+			current_afflictions.erase("injured")
+			modify_grit(10) 
+		"Oil":
+			# Instantly repairs weapon condition on the road
+			modify_gun_condition(30)
+			current_afflictions.erase("dirty")
+		"Water":
+			# Emergency hydration burst
+			modify_water(20)
+		"Scrap":
+			# Risky improvised repair on the road
+			modify_gun_condition(15)
+			# 50% chance to make the gun dirty due to poor materials
+			if randi() % 100 < 50 and not current_afflictions.has("dirty"):
+				current_afflictions.append("dirty")
+		"Map":
+			# Gives you a tactical shortcut, reducing the distance to the target
+			modify_gap(-10)
+			
+	# 4. Trigger the global UI refresh so the button disappears and stats update
+	stats_changed.emit()
