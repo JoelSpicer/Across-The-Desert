@@ -7,7 +7,38 @@
 [ext_resource type="PackedScene" uid="uid://cb20sqytd55vh" path="res://Scene/CombatPhase.tscn" id="18_3u5f0"]
 [ext_resource type="PackedScene" uid="uid://qwxj1tnvrd36" path="res://Scene/SettlementPhase.tscn" id="19_tix3s"]
 
-[node name="MainGame" type="Control" unique_id=681661840]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_retro"]
+content_margin_left = 15.0
+content_margin_top = 15.0
+content_margin_right = 15.0
+content_margin_bottom = 15.0
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_BtnNormal"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_BtnHover"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+anti_aliasing = false
+
+[node name="MainGame" type="Control" unique_id=1074730405]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -16,7 +47,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_qop27")
 
-[node name="BackgroundLayer" type="ColorRect" parent="." unique_id=116205780]
+[node name="BackgroundLayer" type="ColorRect" parent="." unique_id=795180160]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -26,8 +57,7 @@ grow_vertical = 2
 color = Color(0, 0, 0, 1)
 script = ExtResource("2_noc35")
 
-[node name="AsciiDisplay" type="RichTextLabel" parent="BackgroundLayer" unique_id=1591160278]
-self_modulate = Color(1, 1, 1, 0.28235295)
+[node name="AsciiDisplay" type="RichTextLabel" parent="BackgroundLayer" unique_id=116937704]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -35,13 +65,14 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/normal_font = ExtResource("3_tsug7")
+theme_override_font_sizes/normal_font_size = 10
 bbcode_enabled = true
 fit_content = true
 autowrap_mode = 0
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="." unique_id=130289015]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1559541603]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -53,118 +84,176 @@ theme_override_constants/margin_top = 30
 theme_override_constants/margin_right = 30
 theme_override_constants/margin_bottom = 30
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=1834242907]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=716469211]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=1217635462]
+[node name="LeftColumn" type="VBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=872790580]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="TopHUD" type="HBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=1628873461]
+[node name="TopPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer/LeftColumn" unique_id=1115561292]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_retro")
+
+[node name="TopHUD" type="HBoxContainer" parent="MarginContainer/HBoxContainer/LeftColumn/TopPanel" unique_id=1572369778]
 layout_mode = 2
 alignment = 1
 
-[node name="TimeLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/TopHUD" unique_id=1618261645]
+[node name="TimeLabel" type="Label" parent="MarginContainer/HBoxContainer/LeftColumn/TopPanel/TopHUD" unique_id=1728144719]
+unique_name_in_owner = true
 layout_mode = 2
+theme_override_font_sizes/font_size = 12
 
-[node name="WaterLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/TopHUD" unique_id=663611761]
+[node name="WaterLabel" type="Label" parent="MarginContainer/HBoxContainer/LeftColumn/TopPanel/TopHUD" unique_id=1776648745]
+unique_name_in_owner = true
 layout_mode = 2
+theme_override_font_sizes/font_size = 12
 text = "waterlabel"
 
-[node name="GritLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/TopHUD" unique_id=1120266740]
+[node name="GritLabel" type="Label" parent="MarginContainer/HBoxContainer/LeftColumn/TopPanel/TopHUD" unique_id=1502203360]
+unique_name_in_owner = true
 layout_mode = 2
+theme_override_font_sizes/font_size = 12
 text = "gritlabel"
 
-[node name="GapLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/TopHUD" unique_id=1436106187]
+[node name="GapLabel" type="Label" parent="MarginContainer/HBoxContainer/LeftColumn/TopPanel/TopHUD" unique_id=827566808]
+unique_name_in_owner = true
 layout_mode = 2
+theme_override_font_sizes/font_size = 12
 text = "gaplabel"
 
-[node name="GunConditionLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/TopHUD" unique_id=49075460]
+[node name="GunConditionLabel" type="Label" parent="MarginContainer/HBoxContainer/LeftColumn/TopPanel/TopHUD" unique_id=1373359530]
+unique_name_in_owner = true
 layout_mode = 2
+theme_override_font_sizes/font_size = 12
 text = "GunConditionLabel"
 
-[node name="AmmoLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/TopHUD" unique_id=2003342263]
+[node name="AmmoLabel" type="Label" parent="MarginContainer/HBoxContainer/LeftColumn/TopPanel/TopHUD" unique_id=802202215]
+unique_name_in_owner = true
 layout_mode = 2
+theme_override_font_sizes/font_size = 12
 text = "AmmoLabel"
 
-[node name="EventDisplayArea" type="ColorRect" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=584878760]
+[node name="ArtSpacer" type="Control" parent="MarginContainer/HBoxContainer/LeftColumn" unique_id=817952317]
 layout_mode = 2
 size_flags_vertical = 3
-color = Color(0, 0, 0, 0)
 
-[node name="MainText" type="RichTextLabel" parent="MarginContainer/HBoxContainer/VBoxContainer/EventDisplayArea" unique_id=662743340]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="BottomPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer/LeftColumn" unique_id=76589103]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_retro")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/LeftColumn/BottomPanel" unique_id=330033641]
+layout_mode = 2
+theme_override_constants/separation = 15
+alignment = 1
+
+[node name="MainText" type="RichTextLabel" parent="MarginContainer/HBoxContainer/LeftColumn/BottomPanel/VBoxContainer" unique_id=1207290322]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 17
 bbcode_enabled = true
 text = "richtextlabel"
 fit_content = true
+autowrap_mode = 2
 horizontal_alignment = 1
-vertical_alignment = 1
 
-[node name="ActionButtons" type="HBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=40023567]
+[node name="ActionButtons" type="VBoxContainer" parent="MarginContainer/HBoxContainer/LeftColumn/BottomPanel/VBoxContainer" unique_id=1794593309]
 layout_mode = 2
 alignment = 1
 
-[node name="Choice1Button" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/ActionButtons" unique_id=1415337461]
+[node name="Choice1Button" type="Button" parent="MarginContainer/HBoxContainer/LeftColumn/BottomPanel/VBoxContainer/ActionButtons" unique_id=591271316]
+unique_name_in_owner = true
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxFlat_BtnNormal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/hover = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_BtnHover")
 text = "choice 1"
 
-[node name="Choice2Button" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/ActionButtons" unique_id=1780760058]
+[node name="Choice2Button" type="Button" parent="MarginContainer/HBoxContainer/LeftColumn/BottomPanel/VBoxContainer/ActionButtons" unique_id=787897704]
+unique_name_in_owner = true
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxFlat_BtnNormal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/hover = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_BtnHover")
 text = "choice 2"
 
-[node name="MakeCampButton" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/ActionButtons" unique_id=180408919]
+[node name="MakeCampButton" type="Button" parent="MarginContainer/HBoxContainer/LeftColumn/BottomPanel/VBoxContainer/ActionButtons" unique_id=817449591]
+unique_name_in_owner = true
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxFlat_BtnNormal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/hover = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_BtnHover")
 text = "Make Camp"
 
-[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/HBoxContainer" unique_id=1800848474]
+[node name="InventoryPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer" unique_id=1367925486]
+custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_retro")
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/PanelContainer" unique_id=29585028]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/InventoryPanel" unique_id=533699997]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/PanelContainer/MarginContainer" unique_id=1464131382]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/InventoryPanel/MarginContainer" unique_id=921879898]
 layout_mode = 2
 
-[node name="TitleLabel" type="Label" parent="MarginContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1238115858]
+[node name="TitleLabel" type="Label" parent="MarginContainer/HBoxContainer/InventoryPanel/MarginContainer/VBoxContainer" unique_id=1886889943]
 layout_mode = 2
 text = "INVENTORY"
+horizontal_alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="MarginContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1524910305]
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/HBoxContainer/InventoryPanel/MarginContainer/VBoxContainer" unique_id=1156931717]
 layout_mode = 2
 
-[node name="InventoryList" type="Label" parent="MarginContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=631478764]
+[node name="InventoryList" type="Label" parent="MarginContainer/HBoxContainer/InventoryPanel/MarginContainer/VBoxContainer" unique_id=179871055]
 unique_name_in_owner = true
 layout_mode = 2
+autowrap_mode = 2
 
-[node name="AfflictionsLabel" type="Label" parent="MarginContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=2112916698]
+[node name="AfflictionsLabel" type="Label" parent="MarginContainer/HBoxContainer/InventoryPanel/MarginContainer/VBoxContainer" unique_id=1895301329]
 unique_name_in_owner = true
 layout_mode = 2
+autowrap_mode = 2
 
-[node name="HSeparator2" type="HSeparator" parent="MarginContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1805170917]
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/HBoxContainer/InventoryPanel/MarginContainer/VBoxContainer" unique_id=1669983122]
 layout_mode = 2
 
-[node name="DebugKeywordsLabel" type="Label" parent="MarginContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=390685007]
+[node name="DebugKeywordsLabel" type="Label" parent="MarginContainer/HBoxContainer/InventoryPanel/MarginContainer/VBoxContainer" unique_id=662072070]
 unique_name_in_owner = true
 layout_mode = 2
+autowrap_mode = 2
 
-[node name="EventManager" type="Node" parent="." unique_id=1248262272]
+[node name="EventManager" type="Node" parent="." unique_id=1146143879]
 script = ExtResource("2_cp47j")
 
-[node name="SettlementPhase" parent="." unique_id=233874774 instance=ExtResource("19_tix3s")]
+[node name="SettlementPhase" parent="." unique_id=1102888690 instance=ExtResource("19_tix3s")]
 unique_name_in_owner = true
 visible = false
 layout_mode = 1
 
-[node name="CombatPhase" parent="." unique_id=1819485237 instance=ExtResource("18_3u5f0")]
+[node name="CombatPhase" parent="." unique_id=2060117058 instance=ExtResource("18_3u5f0")]
 unique_name_in_owner = true
 visible = false
 layout_mode = 1
