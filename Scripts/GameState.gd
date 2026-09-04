@@ -20,7 +20,7 @@ var is_dead: bool = false
 
 var inventory: Array[String] = []
 
-var current_biome: String = "dunes"
+var current_biome: String = "ruins"
 
 var available_biomes: Array[String] = ["dunes", "flats", "canyons", "ruins", "scrubland"]
 
@@ -253,21 +253,27 @@ func get_current_keywords() -> Array[String]:
 	return keywords
 
 # ------------------------------------------------------------------------
-# CONSUMABLE DATABASE
-# A scalable dictionary mapping item IDs to their display names.
-# To add new items to the game, just define them here and add a case below.
+# ITEM DATABASE
+# Upgraded to a dictionary of dictionaries. 
+# 'consumable: true' means it generates a "Use" button in the UI.
+# 'consumable: false' means it sits passively as a Key Item.
 # ------------------------------------------------------------------------
 const ITEM_DATABASE = {
-	"Bandage": "Sterile Bandage",
-	"Oil": "Tin of Gun Oil",
-	"Canteen": "Canteen Ration",
-	"Scrap": "Scrap Metal",
-	"Map": "Scavenger's Map",
-	"Stamina": "Stamina Ampoule",
-	"Creatine": "Creatine Powder",
-	"SnakeOil": "Snake Oil",
-	"Salts": "Smelling Salts"
+	"Bandage": {"name": "Sterile Bandage", "consumable": true},
+	"Oil": {"name": "Tin of Gun Oil", "consumable": true},
+	"Canteen": {"name": "Canteen Ration", "consumable": true},
+	"Scrap": {"name": "Scrap Metal", "consumable": true},
+	"Map": {"name": "Scavenger's Map", "consumable": true},
+	"Stamina": {"name": "Stamina Ampoule", "consumable": true},
+	"Creatine": {"name": "Creatine Powder", "consumable": true},
+	"SnakeOil": {"name": "Snake Oil", "consumable": true},
+	"Salts": {"name": "Smelling Salts", "consumable": true},
+	
+	# --- NEW KEY ITEMS ---
+	"OldKey": {"name": "Rusted Old Key", "consumable": false},
+	"BunkerCode": {"name": "Bunker Passcode", "consumable": false}
 }
+
 
 # ------------------------------------------------------------------------
 # INVENTORY CONSUMPTION LOGIC

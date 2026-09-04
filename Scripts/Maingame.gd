@@ -104,7 +104,7 @@ func update_hud():
 	label_ammo.text = "Ammo: " + str(GameState.ammo) + " | "
 	
 	# --------------------------------------------------------------------
-	# 3. DYNAMIC INVENTORY BUTTON GENERATION
+	# 3. DYNAMIC INVENTORY UI GENERATION
 	# --------------------------------------------------------------------
 	# Clear out any existing labels or buttons from the previous UI state
 	for child in label_inventory_list.get_children():
@@ -117,35 +117,48 @@ func update_hud():
 		empty_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		label_inventory_list.add_child(empty_label)
 	else:
-		# If we have items, iterate through the array and build a button for each
+		# Iterate through the array and build UI elements for each item
 		for item_id in GameState.inventory:
-			var btn = Button.new()
-			
-			# Fetch the friendly display name (e.g., translates "Oil" to "Tin of Gun Oil")
 			var display_name = item_id
+			var is_consumable = false
+			
+			# Fetch the metadata from the global database
 			if GameState.ITEM_DATABASE.has(item_id):
-				display_name = GameState.ITEM_DATABASE[item_id]
+				display_name = GameState.ITEM_DATABASE[item_id]["name"]
+				is_consumable = GameState.ITEM_DATABASE[item_id]["consumable"]
 				
-			btn.text = "Use " + display_name
-			
-			# Programmatically copy the 1-bit retro styling from your choice buttons
-			btn.add_theme_stylebox_override("normal", btn_choice_1.get_theme_stylebox("normal"))
-			btn.add_theme_stylebox_override("hover", btn_choice_1.get_theme_stylebox("hover"))
-			btn.add_theme_stylebox_override("pressed", btn_choice_1.get_theme_stylebox("pressed"))
-			btn.add_theme_stylebox_override("focus", btn_choice_1.get_theme_stylebox("focus"))
-			
-			# Programmatically copy the hover/invert text colors
-			btn.add_theme_color_override("font_color", Color.WHITE)
-			btn.add_theme_color_override("font_hover_color", Color.BLACK)
-			btn.add_theme_color_override("font_pressed_color", Color.BLACK)
-			btn.add_theme_color_override("font_focus_color", Color.BLACK)
-			btn.add_theme_font_size_override("font_size", 12)
-			
-			# Bind the button press directly to the global item consumption logic!
-			btn.pressed.connect(GameState.consume_item.bind(item_id))
-			
-			# Attach the fully built button to the UI tree
-			label_inventory_list.add_child(btn)
+			if is_consumable:
+				# --- BUILD INTERACTIVE BUTTON ---
+				var btn = Button.new()
+				btn.text = "Use " + display_name
+				
+				# Copy the 1-bit retro styling from your existing choice buttons
+				btn.add_theme_stylebox_override("normal", btn_choice_1.get_theme_stylebox("normal"))
+				btn.add_theme_stylebox_override("hover", btn_choice_1.get_theme_stylebox("hover"))
+				btn.add_theme_stylebox_override("pressed", btn_choice_1.get_theme_stylebox("pressed"))
+				btn.add_theme_stylebox_override("focus", btn_choice_1.get_theme_stylebox("focus"))
+				
+				# Copy the hover/invert text colors
+				btn.add_theme_color_override("font_color", Color.WHITE)
+				btn.add_theme_color_override("font_hover_color", Color.BLACK)
+				btn.add_theme_color_override("font_pressed_color", Color.BLACK)
+				btn.add_theme_color_override("font_focus_color", Color.BLACK)
+				btn.add_theme_font_size_override("font_size", 12)
+				
+				# Bind the button press directly to the global item consumption logic
+				btn.pressed.connect(GameState.consume_item.bind(item_id))
+				
+				# Attach the fully built button to the UI tree
+				label_inventory_list.add_child(btn)
+			else:
+				# --- BUILD STATIC LABEL (KEY ITEMS) ---
+				var lbl = Label.new()
+				# Adding a little dash makes it look like a clean list
+				lbl.text = "- " + display_name 
+				lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+				lbl.add_theme_font_size_override("font_size", 12)
+				
+				label_inventory_list.add_child(lbl)
 	
 	# Enable or disable the Camp button based on available food supplies
 	if GameState.food > 0:
@@ -223,7 +236,6 @@ func update_hud():
 		var gained_affliction = GameState.current_afflictions.size() > prev_afflictions.size()
 		animate_label(label_afflictions, not gained_affliction)
 		prev_afflictions = GameState.current_afflictions.duplicate()
-
 # ------------------------------------------------------------------------
 # 1-BIT UI FLICKER
 # Replaces the smooth red/green fade with a harsh, retro visual glitch
