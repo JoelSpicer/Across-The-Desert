@@ -314,31 +314,34 @@ func consume_item(item_id: String):
 		"Stamina":
 			# A massive, pure energy boost. Cures exhaustion immediately.
 			modify_grit(35)
-			current_afflictions.erase("exhausted")
+			current_afflictions.erase("slow")
 			
 		"Salts":
 			# A harsh shock to the system: wakes you up, but dehydrates you slightly.
 			modify_grit(15)
 			modify_water(-5)
-			current_afflictions.erase("dazed")
+			current_afflictions.erase("clumsy")
 			
 		"SnakeOil":
 			# A true desert gamble. 50% chance to be a miracle cure, 50% chance to poison you.
 			if randi() % 100 < 50:
 				modify_grit(20)
-				current_afflictions.erase("sick")
+				current_afflictions.erase("slow")
+				current_afflictions.erase("injured")
 			else:
 				modify_grit(-15)
-				if not current_afflictions.has("sick"):
-					current_afflictions.append("sick")
+				if not current_afflictions.has("slow"):
+					current_afflictions.append("slow")
+				if not current_afflictions.has("injured"):
+					current_afflictions.append("injured")
 					
 		"Creatine":
 			# Excellent for maintaining your resistance training program and arm development 
 			# even out in the wastes. Costs water to mix, but grants a physical buff for brawling!
 			modify_water(-10)
 			modify_grit(10)
-			if not current_afflictions.has("pumped"):
-				current_afflictions.append("pumped")
+			if not current_afflictions.has("haste"):
+				current_afflictions.append("haste")
 			
 	# 4. Trigger the global UI refresh so the button disappears and stats update
 	stats_changed.emit()

@@ -35,9 +35,6 @@ var combat_active: bool = false
 # INITIALIZATION & PARSING
 # Called by MainGame.gd when an event triggers a fight
 # ------------------------------------------------------------------------
-# ------------------------------------------------------------------------
-# INITIALIZATION & PARSING
-# ------------------------------------------------------------------------
 func start_combat(combat_string: String):
 	active_enemies.clear()
 	player_cover = 0
@@ -68,7 +65,7 @@ func start_combat(combat_string: String):
 			"is_melee": is_melee,
 			"distance": 3, 
 			"cover": 0,    
-			"hp": hp       # NEW: Store the health points in the dictionary
+			"hp": hp       # Store the health points in the dictionary
 		})
 	
 	show()
@@ -104,6 +101,10 @@ func _on_btn_shoot_pressed():
 	if GameState.gun_condition < 60:
 		jam_chance = 60 - GameState.gun_condition
 		
+	# --- NEW: Check for the 'dirty' affliction modifier ---
+	if GameState.current_afflictions.has("dirty"):
+		jam_chance += 20 # Dramatically increases misfire chance if the gun is dirty
+		
 	if randi() % 100 < jam_chance:
 		_log_message("CLACK. Your poorly maintained weapon jams! You frantically clear the chamber.")
 		GameState.modify_gun_condition(-2) 
@@ -113,15 +114,32 @@ func _on_btn_shoot_pressed():
 	GameState.modify_ammo(-1)
 	GameState.modify_gun_condition(-5)
 	
+	# --- NEW: Check for the 'clumsy' affliction modifier ---
+	if GameState.current_afflictions.has("clumsy"):
+		if randi() % 100 < 30: # 30% chance to drop a bullet while reloading/shooting
+			GameState.modify_ammo(-1)
+			_log_message("Your clumsy hands fumble the weapon, and you drop a bullet into the sand!")
+	
 	var target = _get_best_target()
 	_log_message("You fire at the " + target.name + "...")
 	
 	var hit_chance = 80 - (target.distance * 15) - (target.cover * 30)
 	if GameState.gun_condition < 50: hit_chance -= 20
-	#hit_chance = 100
+	
+	# --- NEW: Apply positive and negative afflictions to accuracy ---
+	if GameState.current_afflictions.has("injured"):
+		hit_chance -= 15
+	if GameState.current_afflictions.has("haste"):
+		hit_chance += 10
+		
 	if randi() % 100 < hit_chance:
-		# NEW: Reduce HP instead of instantly killing
+		# Reduce HP instead of instantly killing
 		target.hp -= 1
+		
+		# --- NEW: Check for 'pumped' double damage buff ---
+		if GameState.current_afflictions.has("pumped"):
+			target.hp -= 1
+			_log_message("Your shot hits with brutal, focused kinetic energy!")
 		
 		if target.hp <= 0:
 			_log_message("A fatal hit! The " + target.name + " goes down.")
@@ -158,10 +176,21 @@ func _on_btn_melee_pressed():
 	
 	var hit_chance = 75 - (target.cover * 20)
 	
+	# --- NEW: Apply positive and negative afflictions to melee ---
+	if GameState.current_afflictions.has("injured"):
+		hit_chance -= 25 # Melee is much harder when injured
+	if GameState.current_afflictions.has("haste"):
+		hit_chance += 20
+		
 	if randi() % 100 < hit_chance:
-		# NEW: Reduce HP on melee strikes
+		# Reduce HP on melee strikes
 		target.hp -= 1
 		
+		# --- NEW: Check for 'pumped' double damage buff ---
+		if GameState.current_afflictions.has("pumped"):
+			target.hp -= 1
+			_log_message("Fueled by adrenaline, your strike lands with crushing force!")
+			
 		if target.hp <= 0:
 			_log_message("A brutal strike! The " + target.name + " crumples to the dirt.")
 			active_enemies.erase(target)
@@ -216,15 +245,21 @@ func _on_btn_retreat_pressed():
 	# Retreating increases your distance from EVERY enemy simultaneously
 	for enemy in active_enemies:
 		enemy.distance += 1
-		# If even ONE enemy is closer than distance 4, you can't escape yet
-		if enemy.distance < 4:
+		
+		# --- NEW: Apply 'slow' affliction penalty to escaping ---
+		var escape_threshold = 4
+		if GameState.current_afflictions.has("slow"):
+			escape_threshold = 5 # If you are slow, you must push them further away to escape
+			
+		# If even ONE enemy is closer than the threshold, you can't escape yet
+		if enemy.distance < escape_threshold:
 			can_escape = false
 			
 	# Turning your back to run breaks your cover completely
 	player_cover = 0 
 	_log_message("You fall back, putting more space between you and the threats.")
 	
-	# If you managed to push every enemy to distance 4, you successfully flee
+	# If you managed to push every enemy away, you successfully flee
 	if can_escape:
 		_log_message("You managed to slip away into the desert.")
 		_end_combat(true) 
@@ -284,6 +319,10 @@ func _enemy_melee_attack(enemy: Dictionary):
 	# Melee attacks ignore distance and are only slightly affected by player cover
 	var hit_chance = 85 - (player_cover * 20) 
 	
+	# --- NEW: Check for player 'haste' dodge bonus against melee ---
+	if GameState.current_afflictions.has("haste"):
+		hit_chance -= 20
+	
 	if randi() % 100 < hit_chance:
 		_log_message("You are torn apart. The desert claims you.")
 		_end_combat(false, enemy.name)
@@ -296,6 +335,10 @@ func _enemy_shoot_attack(enemy: Dictionary):
 	# Enemy accuracy degrades over distance and is heavily penalized by player cover
 	var hit_chance = 70 - (enemy.distance * 15) - (player_cover * 40)
 	
+	# --- NEW: Check for player 'haste' dodge bonus against bullets ---
+	if GameState.current_afflictions.has("haste"):
+		hit_chance -= 15
+		
 	if randi() % 100 < hit_chance:
 		_log_message("You are hit. The desert claims you.")
 		_end_combat(false, enemy.name)
