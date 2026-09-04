@@ -1,13 +1,13 @@
 extends Node
 
 # The Six Chambers
-var gap_distance: int = 1
+var gap_distance: int = 100
 var max_grit: int = 100
 var current_grit: int = 100
 var water: int = 20
 var ammo: int = 12
 var gun_condition: int = 100
-var food: int = 0
+var food: int = 1
 
 # State Flags
 var loop_count: int = 0
@@ -288,22 +288,60 @@ func consume_item(item_id: String):
 			current_afflictions.erase("bleeding")
 			current_afflictions.erase("injured")
 			modify_grit(10) 
+			
 		"Oil":
 			# Instantly repairs weapon condition on the road
 			modify_gun_condition(30)
 			current_afflictions.erase("dirty")
-		"Water":
-			# Emergency hydration burst
-			modify_water(20)
+			
+		"Canteen":
+			# Emergency hydration burst (Replaces the old 'Water' item)
+			modify_water(25)
+			
 		"Scrap":
 			# Risky improvised repair on the road
 			modify_gun_condition(15)
 			# 50% chance to make the gun dirty due to poor materials
 			if randi() % 100 < 50 and not current_afflictions.has("dirty"):
 				current_afflictions.append("dirty")
+				
 		"Map":
 			# Gives you a tactical shortcut, reducing the distance to the target
 			modify_gap(-10)
 			
+		# --- NEW SCAVENGED ITEMS ---
+		
+		"Stamina":
+			# A massive, pure energy boost. Cures exhaustion immediately.
+			modify_grit(35)
+			current_afflictions.erase("exhausted")
+			
+		"Salts":
+			# A harsh shock to the system: wakes you up, but dehydrates you slightly.
+			modify_grit(15)
+			modify_water(-5)
+			current_afflictions.erase("dazed")
+			
+		"SnakeOil":
+			# A true desert gamble. 50% chance to be a miracle cure, 50% chance to poison you.
+			if randi() % 100 < 50:
+				modify_grit(20)
+				current_afflictions.erase("sick")
+			else:
+				modify_grit(-15)
+				if not current_afflictions.has("sick"):
+					current_afflictions.append("sick")
+					
+		"Creatine":
+			# Excellent for maintaining your resistance training program and arm development 
+			# even out in the wastes. Costs water to mix, but grants a physical buff for brawling!
+			modify_water(-10)
+			modify_grit(10)
+			if not current_afflictions.has("pumped"):
+				current_afflictions.append("pumped")
+			
 	# 4. Trigger the global UI refresh so the button disappears and stats update
 	stats_changed.emit()
+	
+	# 5. Failsafe: Check if a negative consumable effect (like Snake Oil) just killed the player
+	_check_death_states()

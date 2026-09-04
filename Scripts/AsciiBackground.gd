@@ -40,8 +40,8 @@ func update_background(biome_name: String):
 	
 	# Construct the base file path using Godot 4's string formatting
 	# Example: "res://Resource/Art/biome_dunes"
-	#var base_path = "res://Resource/Art/biome_" + biome_name.to_lower()
-	var base_path = "res://Resource/Art/biome_dunes"
+	var base_path = "res://Resource/Art/biome_" + biome_name.to_lower()
+	#var base_path = "res://Resource/Art/biome_ruins"
 	
 	var path_1 = base_path + "_1.txt"
 	var path_2 = base_path + "_2.txt"
