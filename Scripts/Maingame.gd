@@ -96,7 +96,7 @@ func update_hud():
 		time_string = "NIGHT (2x Grit Loss)"
 		
 	# Combine Biome and Time for a clean location header
-	label_time.text = " | " + GameState.current_biome.to_upper() + " - " + time_string + " | "
+	label_time.text = " " + GameState.current_biome.to_upper() + " - " + time_string + " | "
 	
 	# 2. CORE STAT LABELS
 	# Update numerical HUD values directly from the GameState singleton
@@ -104,7 +104,7 @@ func update_hud():
 	label_grit.text = "Grit: " + str(GameState.current_grit) + " | "
 	label_gap.text = "Gap: " + str(GameState.gap_distance) + " | "
 	label_gun.text = "Gun: " + str(GameState.gun_condition) + "%" + " | "
-	label_ammo.text = "Ammo: " + str(GameState.ammo) + " | "
+	label_ammo.text = "Ammo: " + str(GameState.ammo) + " "
 	
 	# 3. INVENTORY & CAMP DISPLAY
 	if GameState.inventory.is_empty():
