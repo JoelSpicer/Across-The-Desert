@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="NarrativeEvent" format=3 uid="uid://qvot37keycbk"]
+
+[ext_resource type="Script" uid="uid://tebrdjqw5ke" path="res://Scripts/NarrativeEvent.gd" id="1_b4wxa"]
+
+[resource]
+script = ExtResource("1_b4wxa")
+event_weight = 7
+required_keywords = Array[String](["dunes"])
+event_text = "Half-buried in the shifting sands is a metallic skeleton of unknown origin. Its silver alloy limbs are eerily flawless, untouched by rust, and its chest cavity emits a faint, sickeningly green hum."
+choice_1_text = "Pry the glowing core out."
+choice_2_text = "Leave the ancient machine alone."
+choice_1_gap_penalty = 5
+choice_1_item_reward = "Stamina"
+choice_1_gives_affliction = "sick"
+choice_2_gap_penalty = -5

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="NarrativeEvent" format=3 uid="uid://137vhk6em2ok"]
+
+[ext_resource type="Script" uid="uid://tebrdjqw5ke" path="res://Scripts/NarrativeEvent.gd" id="1_phk63"]
+
+[resource]
+script = ExtResource("1_phk63")
+event_weight = 12
+forbidden_keywords = Array[String](["canyons", "ruins"])
+event_text = "The midday sun intensifies into a blinding, oppressive heat wave. The air physically burns your lungs. With no cover in sight, you will boil alive in your own boots if you don't act."
+choice_1_text = "Drink heavily and push on."
+choice_2_text = "Rig a makeshift sunshade."
+choice_1_water_cost = 25
+choice_1_gap_penalty = -10
+choice_2_gap_penalty = 10
+choice_2_required_item = "Scrap"

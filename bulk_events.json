@@ -1,0 +1,93 @@
+[
+  {
+	"filename": "event_vending_machine",
+	"event_weight": 8,
+	"required_keywords": ["ruins"],
+	"event_text": "An ancient, hum-buzzing vending machine stands defiantly against a crumbling wall. The glass is thick, but the coin slot looks like it might accept suitably shaped metal.",
+	"choice_1_text": "Force a piece of scrap into the slot.",
+	"choice_2_text": "Smash the glass with your gun.",
+	"choice_1_required_item": "Scrap",
+	"choice_1_item_reward": "Canteen",
+	"choice_2_gun_condition_cost": 20,
+	"choice_2_food_cost": -1,
+	"choice_2_gives_affliction": "clumsy"
+  },
+  {
+	"filename": "event_sinkhole",
+	"event_weight": 10,
+	"required_keywords": ["dunes"],
+	"event_text": "The ground gives way beneath your boots! You've stepped into a deep, shifting sinkhole. The more you struggle, the faster the sand pulls you down.",
+	"choice_1_text": "Burn all your energy to scramble out.",
+	"choice_2_text": "Pop Smelling Salts and surge out!",
+	"choice_1_grit_cost": 25,
+	"choice_1_gap_penalty": 10,
+	"choice_1_gives_affliction": "exhausted",
+	"choice_2_required_item": "Salts",
+	"choice_2_gap_penalty": -5
+  },
+  {
+	"filename": "event_feral_pack",
+	"event_weight": 11,
+	"forbidden_keywords": ["ruins"],
+	"event_text": "A pack of starved, rabid coyotes blocks the path. They bare their teeth, ribs showing through patchy fur. They look hungry enough to risk attacking you.",
+	"choice_1_text": "Throw them food to distract them.",
+	"choice_2_text": "Draw your weapon and stand your ground.",
+	"choice_1_food_cost": 1,
+	"choice_1_gap_penalty": -10,
+	"choice_2_triggers_combat": "Rabid Coyote, Rabid Coyote:melee"
+  },
+  {
+	"filename": "event_preacher",
+	"event_weight": 7,
+	"required_keywords": ["flats", "scrubland"],
+	"event_text": "A delirious man in tattered robes wanders the wastes, preaching to the wind. He offers a blessing of good fortune in exchange for a sip of water.",
+	"choice_1_text": "Share your water.",
+	"choice_2_text": "Ignore him and keep walking.",
+	"choice_1_water_cost": 10,
+	"choice_1_gives_affliction": "lucky",
+	"choice_1_cures_affliction": "sick",
+	"choice_2_gap_penalty": -5
+  },
+  {
+	"filename": "event_snipers_roost",
+	"event_weight": 9,
+	"required_keywords": ["canyons"],
+	"event_text": "You spot a high ledge overlooking the canyon pass. It looks like an old sniper's nest. Scaling the cliff looks dangerous, but snipers usually leave brass behind.",
+	"choice_1_text": "Climb the jagged rocks.",
+	"choice_2_text": "Keep walking on the safe path.",
+	"choice_1_grit_cost": 15,
+	"choice_1_gives_affliction": "bleeding",
+	"choice_1_ammo_cost": -3,
+	"choice_1_gap_penalty": -10,
+	"choice_2_gap_penalty": 5
+  },
+  {
+	"filename": "event_locked_safe",
+	"event_weight": 8,
+	"forbidden_keywords": ["dunes"],
+	"event_text": "Half-buried in the dirt is a heavy iron safe. The dial is completely rusted over, but the keyhole looks intact.",
+	"choice_1_text": "Use the Old Key.",
+	"choice_2_text": "Shoot the hinges off.",
+	"choice_1_required_item": "OldKey",
+	"choice_1_item_reward": "Oil",
+	"choice_1_ammo_cost": -2,
+	"choice_2_ammo_cost": 2,
+	"choice_2_gun_condition_cost": 15,
+	"choice_2_item_reward": "Scrap",
+	"choice_2_gives_affliction": "clumsy"
+  },
+  {
+	"filename": "event_dead_courier",
+	"event_weight": 10,
+	"required_keywords": ["flats"],
+	"event_text": "A courier lies face down in the salt flats, his dispatch bag tightly clutched in rigor mortis. A swarm of desert flies buzzes around the rotting corpse.",
+	"choice_1_text": "Rifle through his bag.",
+	"choice_2_text": "Hold your breath and search quickly.",
+	"choice_1_gives_affliction": "sick",
+	"choice_1_item_reward": "BunkerCode",
+	"choice_1_gap_penalty": 5,
+	"choice_2_required_item": "Stamina",
+	"choice_2_item_reward": "BunkerCode",
+	"choice_2_gap_penalty": -5
+  }
+]

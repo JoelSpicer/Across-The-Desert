@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="NarrativeEvent" format=3 uid="uid://7ewx4t411ufs"]
+
+[ext_resource type="Script" uid="uid://tebrdjqw5ke" path="res://Scripts/NarrativeEvent.gd" id="1_hgjy5"]
+
+[resource]
+script = ExtResource("1_hgjy5")
+required_keywords = Array[String](["dunes"])
+event_text = "The ground gives way beneath your boots! You've stepped into a deep, shifting sinkhole. The more you struggle, the faster the sand pulls you down."
+choice_1_text = "Burn all your energy to scramble out."
+choice_2_text = "Pop Smelling Salts and surge out!"
+choice_1_grit_cost = 25
+choice_1_gap_penalty = 10
+choice_1_gives_affliction = "exhausted"
+choice_2_gap_penalty = -5
+choice_2_required_item = "Salts"

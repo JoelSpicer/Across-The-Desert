@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="NarrativeEvent" format=3 uid="uid://bjd12mlwx2luc"]
+
+[ext_resource type="Script" uid="uid://tebrdjqw5ke" path="res://Scripts/NarrativeEvent.gd" id="1_hnfit"]
+
+[resource]
+script = ExtResource("1_hnfit")
+event_weight = 11
+required_keywords = Array[String](["canyons"])
+event_text = "A massive rockslide completely blocks the narrow pass. The boulders are impossibly heavy. Moving them by hand would be a grueling feat of strength, but finding a detour will cost you precious time."
+choice_1_text = "Heave the rocks out of the way."
+choice_2_text = "Use an ampoule and push through!"
+choice_1_water_cost = 15
+choice_1_grit_cost = 25
+choice_1_gap_penalty = -10
+choice_1_gives_affliction = "exhausted"
+choice_2_gap_penalty = -15
+choice_2_required_item = "Stamina"

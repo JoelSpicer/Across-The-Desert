@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="NarrativeEvent" format=3 uid="uid://b4bnsxt2420cb"]
+
+[ext_resource type="Script" uid="uid://tebrdjqw5ke" path="res://Scripts/NarrativeEvent.gd" id="1_ntjdi"]
+
+[resource]
+script = ExtResource("1_ntjdi")
+required_keywords = Array[String](["scrubland"])
+event_text = "A petrified tree juts from the dirt. A skeleton hangs from a frayed rope, and a glint of metal catches your eye in its pocket."
+choice_1_text = "Climb up and search the body."
+choice_2_text = "Shoot the rope to drop the body."
+choice_1_grit_cost = 5
+choice_1_item_reward = "Scrap"
+choice_1_gives_affliction = "injured"
+choice_2_ammo_cost = 1
+choice_2_item_reward = "Map"

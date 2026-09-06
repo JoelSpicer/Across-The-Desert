@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="NarrativeEvent" format=3 uid="uid://chbwc0lv3a33j"]
+
+[ext_resource type="Script" uid="uid://tebrdjqw5ke" path="res://Scripts/NarrativeEvent.gd" id="1_mluf7"]
+
+[resource]
+script = ExtResource("1_mluf7")
+event_weight = 6
+required_keywords = Array[String](["flats"])
+event_text = "A massive, unexploded artillery shell from the Old War is half-buried in the salt. The casing is cracked, revealing pristine cordite."
+choice_1_text = "Carefully extract powder."
+choice_2_text = "Harvest it with brute force."
+choice_1_item_reward = "Stamina"
+choice_1_required_item = "Scrap"
+choice_2_gun_condition_cost = 15
+choice_2_gives_affliction = "bleeding"

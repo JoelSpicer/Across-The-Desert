@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="NarrativeEvent" format=3 uid="uid://bekg331kv771h"]
+
+[ext_resource type="Script" uid="uid://tebrdjqw5ke" path="res://Scripts/NarrativeEvent.gd" id="1_up2bu"]
+
+[resource]
+script = ExtResource("1_up2bu")
+event_weight = 12
+required_keywords = Array[String](["canyons"])
+event_text = "As you step over a rock formation, a desert viper strikes with lightning speed, sinking its fangs into your boot leather."
+choice_1_text = "Kick it away and run!"
+choice_2_text = "Clean the bite immediately."
+choice_1_gap_penalty = -5
+choice_1_gives_affliction = "sick"
+choice_2_gap_penalty = 5
+choice_2_required_item = "Bandage"

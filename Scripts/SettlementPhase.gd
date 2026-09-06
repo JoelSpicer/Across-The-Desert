@@ -33,6 +33,12 @@ var settlement_db = {
 		"has_water": true, "has_food": true, "has_doc": false,
 		"special_item": "", "special_price": 0
 	},
+	"Wandering Merchant": {
+		"desc": "A heavily cloaked figure leads a burdened pack mule along the trail. They offer a curt nod and open their coat to reveal wares.",
+		"water_price": 3, "food_price": 3, "doc_price": 8,
+		"has_water": true, "has_food": true, "has_doc": false,
+		"special_item": "", "special_price": 0
+	},
 	"Hermit's Shack": {
 		"desc": "A crazy old doctor lives here in solitude. He has no food or water to spare.",
 		"water_price": 0, "food_price": 0, "doc_price": 1, # Doctor is cheaper here!

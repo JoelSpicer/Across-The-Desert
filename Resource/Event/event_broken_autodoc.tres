@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="NarrativeEvent" format=3 uid="uid://bwn6tii3tbcp4"]
+
+[ext_resource type="Script" uid="uid://tebrdjqw5ke" path="res://Scripts/NarrativeEvent.gd" id="1_2h0db"]
+
+[resource]
+script = ExtResource("1_2h0db")
+event_weight = 8
+required_keywords = Array[String](["ruins"])
+event_text = "Inside a crumbling clinic sits an Old World medical pod. Its screen is shattered, but the mechanical arms still twitch with erratic power. It could heal you, but it requires raw materials to function."
+choice_1_text = "Repair the machine and heal."
+choice_2_text = "Smash the glass for loose supplies."
+choice_1_grit_cost = -25
+choice_1_required_item = "Scrap"
+choice_1_cures_affliction = "injured"
+choice_2_gun_condition_cost = 15
+choice_2_item_reward = "Bandage"
+choice_2_gives_affliction = "bleeding"

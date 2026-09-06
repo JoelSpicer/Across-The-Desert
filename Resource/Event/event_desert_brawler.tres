@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="NarrativeEvent" format=3 uid="uid://dpun8syja750v"]
+
+[ext_resource type="Script" uid="uid://tebrdjqw5ke" path="res://Scripts/NarrativeEvent.gd" id="1_couoj"]
+
+[resource]
+script = ExtResource("1_couoj")
+event_weight = 9
+forbidden_keywords = Array[String](["ruins"])
+event_text = "A heavily scarred drifter blocks the trail. He cracks his knuckles, drops his pack, and smirks. 'I don't want your gear, wanderer. I just want a good fight. Show me what you've got!'"
+choice_1_text = "Accept the challenge (Pistol Whip!)"
+choice_2_text = "I don't have time for this nonsense."
+choice_1_triggers_combat = "Scarred Brawler:melee"
+choice_2_grit_cost = 5
+choice_2_gap_penalty = 15

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="NarrativeEvent" format=3 uid="uid://b0q12lns671er"]
+
+[ext_resource type="Script" uid="uid://tebrdjqw5ke" path="res://Scripts/NarrativeEvent.gd" id="1_jlkvl"]
+
+[resource]
+script = ExtResource("1_jlkvl")
+event_weight = 7
+required_keywords = Array[String](["flats", "scrubland"])
+event_text = "A delirious man in tattered robes wanders the wastes, preaching to the wind. He offers a blessing of good fortune in exchange for a sip of water."
+choice_1_text = "Share your water."
+choice_2_text = "Ignore him and keep walking."
+choice_1_water_cost = 10
+choice_1_gives_affliction = "lucky"
+choice_1_cures_affliction = "sick"
+choice_2_gap_penalty = -5

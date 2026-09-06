@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="NarrativeEvent" format=3 uid="uid://dhv5oybqecaa8"]
+
+[ext_resource type="Script" uid="uid://tebrdjqw5ke" path="res://Scripts/NarrativeEvent.gd" id="1_8d06y"]
+
+[resource]
+script = ExtResource("1_8d06y")
+event_weight = 15
+forbidden_keywords = Array[String](["dunes"])
+event_text = "A heavily cloaked figure leads a burdened pack mule along the trail. They offer a curt nod and open their coat to reveal wares."
+choice_1_text = "Trade with them."
+choice_2_text = "Draw your gun and rob them."
+choice_1_gap_penalty = 5
+choice_1_opens_settlement = "Wandering Merchant"
+choice_2_triggers_combat = "Caravan Guard"

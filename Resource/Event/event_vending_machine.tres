@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="NarrativeEvent" format=3 uid="uid://ctcur7sjfoxhk"]
+
+[ext_resource type="Script" uid="uid://tebrdjqw5ke" path="res://Scripts/NarrativeEvent.gd" id="1_n4rjt"]
+
+[resource]
+script = ExtResource("1_n4rjt")
+event_weight = 8
+required_keywords = Array[String](["ruins"])
+event_text = "An ancient, hum-buzzing vending machine stands defiantly against a crumbling wall. The glass is thick, but the coin slot looks like it might accept suitably shaped metal."
+choice_1_text = "Force a piece of scrap into the slot."
+choice_2_text = "Smash the glass with your gun."
+choice_1_item_reward = "Canteen"
+choice_1_required_item = "Scrap"
+choice_2_food_cost = -1
+choice_2_gun_condition_cost = 20
+choice_2_gives_affliction = "clumsy"
