@@ -262,13 +262,18 @@ func animate_label(ui_element: Control, is_good: bool):
 # EVENT & PHASE TRIGGERS
 # ------------------------------------------------------------------------
 func load_event(event_resource: NarrativeEvent):
-	# Push the text data into the UI nodes
+	# 1. Push the main narrative text block into the UI reading panel
 	main_text.text = event_resource.event_text
-	btn_choice_1.text = event_resource.choice_1_text
-	btn_choice_2.text = event_resource.choice_2_text
 	
-	# Update the background layer to show the ASCII art for the current environment
+	# 2. Update the background layer to visually reflect the new environment
 	ascii_background.update_background(GameState.current_biome)
+	
+	# 3. Force a complete HUD recalculation.
+	# We no longer set button text manually in this function. Instead, calling
+	# update_hud() guarantees that the game evaluates the brand-new event's 
+	# resource costs against the player's current inventory, properly resetting 
+	# the text, visibility, and disabled/greyed-out states of the choice buttons.
+	update_hud()
 
 func _on_choice_1_pressed():
 	# Tell the Event Manager that choice 1 was picked
@@ -292,14 +297,12 @@ func _on_make_camp_pressed():
 # DEATH & BOSS STATES
 # ------------------------------------------------------------------------
 func _on_player_died():
-	# Hide any active popups or UI elements so they don't visually glitch
-	# while the engine is tearing down the current scene
-	$MarginContainer.hide()
+	# Hide the entire root Control node so neither the main HUD 
+	# nor any active Combat/Camp overlays remain visible during the tear-down
+	hide()
 	
-	# Pass control over to the Game Over scene.
-	# Because GameState.is_dead is now true, GameOver.gd will automatically
-	# realize this is a defeat rather than a victory.
-	get_tree().change_scene_to_file("res://Scene/GameOver.tscn")
+	# Transition cleanly to the Game Over screen
+	get_tree().call_deferred("change_scene_to_file", "res://Scene/GameOver.tscn")
 	
 func _on_boss_encounter_triggered():
 	# Hide the standard event UI so it doesn't overlap the combat screen

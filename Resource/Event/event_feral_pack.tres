@@ -9,6 +9,6 @@ forbidden_keywords = Array[String](["ruins"])
 event_text = "A pack of starved, rabid coyotes blocks the path. They bare their teeth, ribs showing through patchy fur. They look hungry enough to risk attacking you."
 choice_1_text = "Throw them food to distract them."
 choice_2_text = "Draw your weapon and stand your ground."
-choice_1_food_cost = 1
+choice_1_food_cost = -1
 choice_1_gap_penalty = -10
 choice_2_triggers_combat = "Rabid Coyote, Rabid Coyote:melee"
