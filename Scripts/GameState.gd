@@ -13,7 +13,9 @@ var food: int = 1
 var loop_count: int = 0
 var has_horn_of_eld: bool = false
 var current_afflictions: Array[String] = []
-var is_day: bool = true
+
+const TIME_STATES = ["Morning", "High Noon", "Evening", "Midnight"]
+var time_index: int = 0
 
 var death_reason: String = "" # Stores the specific failure message
 var is_dead: bool = false
@@ -122,9 +124,58 @@ func reset_run():
 	stats_changed.emit()
 
 func advance_time():
-	# Flip the boolean (if true, becomes false; if false, becomes true)
-	is_day = !is_day
+	# 1. Rotate the clock forward (0 = Morning, 1 = High Noon, 2 = Evening, 3 = Midnight)
+	time_index = (time_index + 1) % 4
+	
+	# 2. Establish the baseline cost for traveling between nodes
+	var water_loss = 1
+	var grit_loss = 1
+	
+	# 3. Apply Time-of-Day specific multipliers and status hazards
+	match time_index:
+		1: # HIGH NOON
+			# Double the water loss due to extreme heat
+			water_loss *= 2 
+			
+			# 30% chance to gain heat exhaustion during peak day hours
+			if randi() % 100 < 30 and not current_afflictions.has("exhausted"):
+				current_afflictions.append("exhausted")
+				
+		3: # MIDNIGHT
+			# Double the grit loss due to freezing temperatures and paranoia
+			grit_loss *= 2 
+			
+			# 20% chance to dirty your weapon while stumbling in the dark
+			if randi() % 100 < 20 and not current_afflictions.has("dirty"):
+				current_afflictions.append("dirty")
+				
+	# 4. Apply the final calculated losses to the global stats
+	modify_water(water_loss)
+	modify_grit(grit_loss)
+	
+	# 5. Trigger the standard affliction loop (if active)
+	process_afflictions()
+	
+	# 6. Broadcast the changes to the UI to trigger the visual flash
 	stats_changed.emit()
+	
+	# 7. Check if the time/travel hazards just triggered a Game Over state
+	_check_death_states()
+
+func rest_in_place():
+	# 1. Rotate the clock forward 
+	time_index = (time_index + 1) % 4
+	
+	# 2. Minimal survival cost for sitting in the shade (no travel exhaustion)
+	#modify_water(-2) 
+	
+	# 3. CRITICAL PENALTY: You stopped moving, but the Man in Black didn't.
+	modify_gap(+15)
+	
+	# 4. Trigger afflictions and update UI
+	process_afflictions()
+	stats_changed.emit()
+	_check_death_states()
 
 func modify_food(amount: int):
 	food += amount
@@ -233,11 +284,18 @@ func randomize_biome():
 func get_current_keywords() -> Array[String]:
 	var keywords: Array[String] = []
 	
-	# 1. Add environmental tags
-	if is_day:
+	# 1. Add broad environmental tags for legacy events
+	if time_index == 0 or time_index == 1:
 		keywords.append("day")
 	else:
 		keywords.append("night")
+		
+	# 1b. Add highly specific time tags for granular event control
+	match time_index:
+		0: keywords.append("morning")
+		1: keywords.append("noon")
+		2: keywords.append("evening")
+		3: keywords.append("midnight")
 		
 	# 2. Add the current biome tag!
 	keywords.append(current_biome)

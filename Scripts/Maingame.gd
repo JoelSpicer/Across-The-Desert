@@ -8,6 +8,7 @@ extends Control
 @onready var btn_choice_1 = %Choice1Button
 @onready var btn_choice_2 = %Choice2Button
 @onready var btn_make_camp = %MakeCampButton
+@onready var btn_rest = %RestButton
 
 @onready var label_time = %TimeLabel
 @onready var label_water = %WaterLabel
@@ -25,6 +26,7 @@ extends Control
 # System Managers
 @onready var event_manager = $EventManager
 @onready var ascii_background = $BackgroundLayer
+
 
 # ------------------------------------------------------------------------
 # STAT TRACKING VARIABLES (For Tweens)
@@ -80,6 +82,7 @@ func _ready():
 	btn_choice_1.pressed.connect(_on_choice_1_pressed)
 	btn_choice_2.pressed.connect(_on_choice_2_pressed)
 	btn_make_camp.pressed.connect(_on_make_camp_pressed)
+	btn_rest.pressed.connect(_on_rest_pressed)
 	
 	# Kick off the game loop by triggering the very first event
 	if event_manager:
@@ -90,11 +93,18 @@ func _ready():
 # ------------------------------------------------------------------------
 func update_hud():
 	# 1. TIME & LOCATION DISPLAY
-	var time_string = "DAY (2x Water Loss)"
-	if not GameState.is_day:
-		time_string = "NIGHT (2x Grit Loss)"
+	var time_name = GameState.TIME_STATES[GameState.time_index].to_upper()
+	var hazard_warning = ""
+	
+	# Append a mechanical warning to the UI based on the current time state
+	match GameState.time_index:
+		0: hazard_warning = " (Standard Travel)"
+		1: hazard_warning = " (High Water Loss / Heat Risk)"
+		2: hazard_warning = " (Standard Travel)"
+		3: hazard_warning = " (High Grit Loss / Gear Risk)"
 		
-	label_time.text = " | " + GameState.current_biome.to_upper() + " - " + time_string + " | "
+	label_time.text = " | " + GameState.current_biome.to_upper() + " - " + time_name + hazard_warning + " | "
+		
 	
 	# 2. CORE STAT LABELS
 	label_water.text = "Water: " + str(GameState.water) + " | "
@@ -167,6 +177,15 @@ func update_hud():
 	else:
 		btn_make_camp.disabled = true
 		btn_make_camp.text = "No Food to Camp"
+		
+	btn_rest.text = "Hunker Down (Skip Event | Gap +15)"
+	
+	# Optional: Disable the button if the boss is already breathing down their neck
+	if GameState.gap_distance <= 15:
+		btn_rest.disabled = true
+		btn_rest.text = "He's too close to rest!"
+	else:
+		btn_rest.disabled = false
 		
 	# 4. DEBUG TAGS & STATUS AFFLICTIONS
 	var current_tags = GameState.get_current_keywords()
@@ -292,6 +311,13 @@ func _on_make_camp_pressed():
 		# Instantiate the camp phase overlay and attach it to the screen
 		var camp_instance = CAMP_PHASE_SCENE.instantiate()
 		add_child(camp_instance)
+		
+func _on_rest_pressed():
+	# 1. Let time pass safely without travel penalties
+	GameState.rest_in_place()
+	
+	# 2. Draw a new event (effectively letting you skip the current encounter)
+	event_manager.trigger_random_event()
 
 # ------------------------------------------------------------------------
 # DEATH & BOSS STATES

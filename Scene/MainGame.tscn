@@ -213,6 +213,20 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_BtnHover")
 theme_override_styles/focus = SubResource("StyleBoxFlat_BtnHover")
 text = "Make Camp"
 
+[node name="RestButton" type="Button" parent="MarginContainer/HBoxContainer/LeftColumn/BottomPanel/VBoxContainer/ActionButtons" unique_id=1868215850]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_BtnNormal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/hover = SubResource("StyleBoxFlat_BtnHover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_BtnHover")
+text = "Make Camp"
+
 [node name="InventoryPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer" unique_id=1367925486]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2

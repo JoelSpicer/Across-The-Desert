@@ -186,13 +186,22 @@ func process_choice(choice_num: int):
 		combat_enemy = current_event.choice_2_triggers_combat # NEW
 		settlement_name = current_event.choice_2_opens_settlement
 
-	# 2. Apply Day/Night Modifiers
-	if GameState.is_day:
-		if water_cost < 0: water_cost *= 2 
-	else:
-		if water_cost < 0: water_cost = 0 
-		if grit_cost < 0: grit_cost *= 2
-		gap_penalty -= 5 
+	# 2. Apply Time-of-Day Event Modifiers
+	match GameState.time_index:
+		1: # HIGH NOON
+			# Strenuous actions in the midday sun cost double the water
+			if water_cost < 0: 
+				water_cost *= 2 
+		3: # MIDNIGHT
+			# The dark makes tasks terrifying (double grit) but easier to stay hidden (gap bonus)
+			if water_cost < 0: 
+				water_cost = 0 
+			if grit_cost < 0: 
+				grit_cost *= 2
+			gap_penalty -= 5 
+		0, 2: # MORNING & EVENING
+			# Standard event costs apply during the temperate hours
+			pass
 
 	# 3. Apply stats
 	GameState.modify_water(water_cost)
